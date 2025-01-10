@@ -1,0 +1,27 @@
+Customer Segmentation Report
+==============================
+
+Cluster: At-Risk Customers
+  - Avg Recency: 36.15 days
+  - Avg Frequency: 8.27 orders
+  - Avg Monetary Value: $2564.46
+  - Total Customers: 441
+
+Cluster: Big Spenders
+  - Avg Recency: 24.75 days
+  - Avg Frequency: 12.24 orders
+  - Avg Monetary Value: $3559.82
+  - Total Customers: 199
+
+Cluster: Casual Shoppers
+  - Avg Recency: 36.33 days
+  - Avg Frequency: 5.53 orders
+  - Avg Monetary Value: $1295.97
+  - Total Customers: 225
+
+Cluster: Loyal Customers
+  - Avg Recency: 133.18 days
+  - Avg Frequency: 4.99 orders
+  - Avg Monetary Value: $1343.74
+  - Total Customers: 135
+
