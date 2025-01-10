@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website About Jeremy</title>
+    <style>
+        body {
+            font-family: 'Bookman Old Style', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            background: url("IMG_5704.JPEG") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid black; /* Cursor effect */
+            width: 0; /* Hidden initially */
+            animation: typing 3s steps(15, end) forwards, blink 0.75s step-end infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            opacity: 0; /* Hidden initially */
+            animation: fadeIn 3s forwards;
+        }
+
+        #resume-button, #projects-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'Bookman Old Style', serif;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            opacity: 0; /* Hidden initially */
+            animation: fadeIn 3s forwards;
+            animation-delay: calc(3s * 12 / 15);
+        }
+
+        #resume-button:hover, #projects-button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto; /* Reduced vertical margin */
+    width: 90%; /* Increased width for a more stretched layout */
+    max-width: 1000px; /* Adjusted for wider screens */
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px; /* Reduced vertical padding */
+    text-align: left;
+
+
+        }
+
+        .content-container h2 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .toggle-buttons button {
+            padding: 10px 15px;
+            margin: 0 10px;
+            font-size: 1rem;
+            font-family: 'Bookman Old Style', serif;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .toggle-buttons button:hover {
+            background-color: #45a049;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .about-container img {
+            margin-right: 20px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-container p {
+            flex: 1;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 15ch; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello, I'm Jeremy</h1>
+    <p class="delayed">Welcome to my Website</p>
+    <div class="button-container">
+        <button id="resume-button" onclick="location.href='Jeremy_Barry_Resume.pdf'">View My Resume</button>
+        <button id="projects-button" onclick="location.href='Jeremy_Barry_Projects.html'">Projects</button>
+    </div>
+
+    <div class="content-container">
+        <div id="content-about" class="about-container">
+            <img src="IMG_8497.JPEG" alt="Jeremy's photo">
+            <div>
+                <h2>About Me</h2>
+                <p>Hi! I'm Jeremy, a freshman majoring in data science and mathematics at the College of William & Mary. I thrive on tackling complex data challenges and excel at crafting innovative solutions in data analysis with business applications. In my free time, I enjoy hiking, traveling, and pushing myself to learn new skills and technologies.</p>
+            </div>
+        </div>
+
+        <div id="content-skills" style="display: none;">
+            <h2>Skills</h2>
+            <ul>
+                <li>Data Analysis: Google Analytics, Excel, R,  Python (Pandas, NumPy)</li>
+                <li>Data Visualization: Matplotlib, Seaborn, Power BI</li>
+                <li>Programming: Python, Java, HTML</li>
+                <li>Soft Skills: Leadership, Communication, Creativity, Adaptability</li>
+                <li>Random: Eating Pizza, Attempting 5Ks</li>
+            </ul>
+        </div>
+
+        <div class="toggle-buttons">
+            <button onclick="showAbout()">About Me</button>
+            <button onclick="showSkills()">Skills</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact Me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a> | <a href="tel:+19784172728">978-417-2728</a></p>
+        <div>
+            <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
+                <img src="instagram.jpg" alt="Instagram">
+            </a>
+            <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
+                <img src="linkedin.jpg" alt="LinkedIn">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function showAbout() {
+            document.getElementById('content-about').style.display = 'flex';
+            document.getElementById('content-skills').style.display = 'none';
+        }
+
+        function showSkills() {
+            document.getElementById('content-about').style.display = 'none';
+            document.getElementById('content-skills').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

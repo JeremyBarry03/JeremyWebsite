@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeremy's Projects</title>
+    <style>
+        body {
+            font-family: 'Bookman Old Style', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Darker background */
+            color: #ccc; /* Light text for contrast */
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 2.5rem;
+            color: #FFFFFF; /* Green accent color */
+        }
+
+        .projects-container {
+            display: flex;
+            flex-direction: column; /* Stack projects vertically */
+            align-items: center;
+            padding: 30px; /* Slightly increased padding */
+            gap: 40px; /* Add space between projects */
+            max-width: 1000px; /* Moderate container width */
+            margin: 0 auto; /* Center the container */
+        }
+
+        .project-card {
+            background: #333; /* Darker card background */
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 25px; /* Slightly increased padding inside the cards */
+            width: 100%; /* Full width of the container */
+            max-width: 750px; /* Cards stay moderately sized */
+            text-align: center; /* Center-align text and content */
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover {
+            transform: scale(1.03); /* Subtle hover effect */
+        }
+
+        .project-title {
+            font-size: 1.8rem; /* Larger titles */
+            margin-bottom: 15px;
+            color: #4CAF50; /* Green accent for titles */
+        }
+
+        .project-description {
+            font-size: 1rem; /* Keep text moderately sized */
+            margin-bottom: 20px;
+            color: #ddd; /* Softer light gray for text */
+            line-height: 1.5; /* Slightly better line spacing */
+        }
+
+        .view-pdf-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px; /* Regular-sized button */
+            font-size: 1rem;
+            font-family: 'Bookman Old Style', serif;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .view-pdf-button:hover {
+            background-color: #45a049; /* Lighter green on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-home-button {
+            margin: 20px auto; /* Center and add spacing */
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'Bookman Old Style', serif;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .back-home-button:hover {
+            background-color: #45a049; /* Lighter green on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            margin-top: 30px; /* Slightly increased spacing above footer */
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            text-align: center;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #45a049; /* Lighter green on hover */
+        }
+
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px; /* Regular spacing between icons */
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeremy's Projects</h1>
+    <button class="back-home-button" onclick="location.href='index.html'">Back to Home</button>
+    <div class="projects-container">
+        <!-- Project 1 -->
+        <div class="project-card">
+            <h2 class="project-title">Radiation Data Analysis</h2>
+            <a href="C10report.pdf" target="_blank" class="view-pdf-button">View Report</a>
+            <p class="project-description">
+                During my internship at C-10 Research & Education Foundation, I analyzed over 10,000 radiation reports across 15 datasets using Excel. I used pivot tables, conditional formatting, and data visualization to identify trends and report a variance of 314%. 
+                My findings streamlined the reporting process by 30% and were shared with the New Hampshire Department of Health for further review.
+            </p>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+            <h2 class="project-title">Customer Segmentation Analysis</h2>
+            <img src="Customer_Clusters_SeparateGraphs.png" alt="Customer Clusters Visualization" style="width:90%; margin-bottom: 15px;">
+            <p class="project-description">
+                Leveraged Python to perform customer segmentation for a retail dataset. Using the RFM (Recency, Frequency, Monetary) model, I grouped customers into actionable segments such as "Loyal Customers" and "Big Spenders." The analysis included clustering via K-Means and visualizations to aid strategic insights.
+            </p>
+            <div class="project-links">
+                <a href="Cluster_Summary_Report.csv" download class="view-pdf-button">Download Cluster Summary</a>
+                <a href="Customer_Segmentation_Report.txt" download class="view-pdf-button">Download Text Report</a>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+            <h2 class="project-title">Loan Payment Calculator</h2>
+            <p class="project-description">
+                Enhanced a school project with an interactive GUI and visualizations using Matplotlib, Seaborn, and Pandas to calculate and visualize loan repayments.
+            </p>
+            <img src="LoanGUI.png" alt="Loan Calculator GUI" style="width:80%; max-width:350px; margin-bottom: 15px;">
+            <img src="LBG.png" alt="Loan Balance Graph" style="width:80%; max-width:350px; margin-bottom: 15px;">
+            <a href="loan.py" target="_blank" class="view-pdf-button">View Code</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a></p>
+        <div>
+            <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
+                <img src="instagram.jpg" alt="Instagram">
+            </a>
+            <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
+                <img src="linkedin.jpg" alt="LinkedIn">
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
