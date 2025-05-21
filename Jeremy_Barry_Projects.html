@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BNZ4TFFE70');
+    </script>
 
-  gtag('config', 'G-BNZ4TFFE70');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeremy's Projects</title>
@@ -18,60 +18,68 @@
             font-family: 'Bookman Old Style', serif;
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; /* Darker background */
-            color: #ccc; /* Light text for contrast */
+            background-color: #1a1a1a;
+            color: #ccc;
             text-align: center;
         }
 
         h1 {
             margin-top: 20px;
             font-size: 2.5rem;
-            color: #FFFFFF; /* Green accent color */
+            color: #FFFFFF;
         }
 
         .projects-container {
             display: flex;
-            flex-direction: column; /* Stack projects vertically */
+            flex-direction: column;
             align-items: center;
-            padding: 30px; /* Slightly increased padding */
-            gap: 40px; /* Add space between projects */
-            max-width: 1000px; /* Moderate container width */
-            margin: 0 auto; /* Center the container */
+            padding: 30px;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .project-card {
-            background: #333; /* Darker card background */
+            background: #333;
             border: 1px solid #444;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            padding: 25px; /* Slightly increased padding inside the cards */
-            width: 100%; /* Full width of the container */
-            max-width: 750px; /* Cards stay moderately sized */
-            text-align: center; /* Center-align text and content */
+            padding: 25px;
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
             transition: transform 0.2s;
         }
 
         .project-card:hover {
-            transform: scale(1.03); /* Subtle hover effect */
+            transform: scale(1.03);
         }
 
         .project-title {
-            font-size: 1.8rem; /* Larger titles */
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #4CAF50; /* Green accent for titles */
+            color: #4CAF50;
         }
 
         .project-description {
-            font-size: 1rem; /* Keep text moderately sized */
+            font-size: 1rem;
             margin-bottom: 20px;
-            color: #ddd; /* Softer light gray for text */
-            line-height: 1.5; /* Slightly better line spacing */
+            color: #ddd;
+            line-height: 1.5;
         }
 
-        .view-pdf-button {
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .view-pdf-button, .back-home-button {
             display: inline-block;
             margin-top: 15px;
-            padding: 10px 20px; /* Regular-sized button */
+            padding: 10px 20px;
             font-size: 1rem;
             font-family: 'Bookman Old Style', serif;
             background-color: #4CAF50;
@@ -81,32 +89,13 @@
             transition: background-color 0.3s, box-shadow 0.3s;
         }
 
-        .view-pdf-button:hover {
-            background-color: #45a049; /* Lighter green on hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-home-button {
-            margin: 20px auto; /* Center and add spacing */
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-family: 'Bookman Old Style', serif;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-            display: inline-block;
-        }
-
-        .back-home-button:hover {
-            background-color: #45a049; /* Lighter green on hover */
+        .view-pdf-button:hover, .back-home-button:hover {
+            background-color: #45a049;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         footer {
-            margin-top: 30px; /* Slightly increased spacing above footer */
+            margin-top: 30px;
             padding: 15px;
             background-color: #000;
             color: white;
@@ -121,44 +110,53 @@
         }
 
         footer a:hover {
-            color: #45a049; /* Lighter green on hover */
+            color: #45a049;
         }
 
         footer img {
             width: 24px;
             height: 24px;
-            margin: 0 10px; /* Regular spacing between icons */
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
     <h1>Jeremy's Projects</h1>
     <button class="back-home-button" onclick="location.href='index.html'">Back to Home</button>
+
     <div class="projects-container">
-        <!-- Project 1 -->
+        <!-- Project: LiamBot -->
+        <div class="project-card">
+            <h2 class="project-title">LiamBot – AI Assistant</h2>
+            <p class="project-description">
+                Meet LiamBot: a nerdy, witty chatbot who says "Erm..." when he's thinking hard. Powered by OpenAI’s GPT-4o, he answers questions, drops facts, and occasionally  morphs into LiamBron when basketball comes up. Give him a try below:
+            </p>
+            <iframe src="https://liam-says-what-now.vercel.app/"></iframe>
+        </div>
+
+        <!-- Project: Radiation Data Analysis -->
         <div class="project-card">
             <h2 class="project-title">Radiation Data Analysis</h2>
             <a href="C10report.pdf" target="_blank" class="view-pdf-button">View Report</a>
             <p class="project-description">
-                During my internship at C-10 Research & Education Foundation, I analyzed over 10,000 radiation reports across 15 datasets using Excel. I used pivot tables, conditional formatting, and data visualization to identify trends and report a variance of 314%. 
-                My findings streamlined the reporting process by 30% and were shared with the New Hampshire Department of Health for further review.
+                At C-10 Research & Education Foundation, I analyzed over 10,000 radiation reports across 15 datasets using Excel. With pivot tables, conditional formatting, and charts, I uncovered a 314% variance that led to a 30% faster reporting process, reviewed by the NH Department of Health.
             </p>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Project: Customer Segmentation -->
         <div class="project-card">
             <h2 class="project-title">Customer Segmentation Analysis</h2>
             <img src="Customer_Clusters_SeparateGraphs.png" alt="Customer Clusters Visualization" style="width:90%; margin-bottom: 15px;">
             <p class="project-description">
-                Leveraged Python to perform customer segmentation for a retail dataset. Using the RFM (Recency, Frequency, Monetary) model, I grouped customers into actionable segments such as "Loyal Customers" and "Big Spenders." The analysis included clustering via K-Means and visualizations to aid strategic insights.
+                I used Python and the RFM (Recency, Frequency, Monetary) model to group customers by behavior, then applied K-Means clustering to generate strategic business insights. Created visualizations to help stakeholders better understand the segments.
             </p>
-            <div class="project-links">
+            <div>
                 <a href="Cluster_Summary_Report.csv" download class="view-pdf-button">Download Cluster Summary</a>
                 <a href="Customer_Segmentation_Report.txt" download class="view-pdf-button">Download Text Report</a>
             </div>
         </div>
 
-        <!-- Project 3 -->
+        <!-- Project: Loan Calculator -->
         <div class="project-card">
             <h2 class="project-title">Loan Payment Calculator</h2>
             <p class="project-description">
@@ -183,13 +181,3 @@
     </footer>
 </body>
 </html>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BNZ4TFFE70');
-</script>
