@@ -331,12 +331,17 @@
             color: #45a049;
         }
 
-        footer img {
-            width: 24px;
-            height: 24px;
-            margin: 0 10px;
-            vertical-align: middle;
-        }
+        .footer-icon {
+    height: 1.3rem;
+    width: auto;
+    vertical-align: middle;
+    position: relative;
+    top: 2px;
+    filter: grayscale(100%) brightness(200%);
+    transition: filter 0.3s ease;
+}
+
+
 
         /* Animations */
         @keyframes float {
@@ -448,8 +453,8 @@
     <!-- Intro Animation Screen -->
     <div class="intro-screen" id="introScreen">
         <div class="continue-prompt" id="continuePrompt" style="display: none;">
-            <h2>Press Enter to Continue</h2>
-            <p>or click anywhere</p>
+            <h2>Click Anywhere to continue</h2>
+            <p>or press enter/p>
         </div>
     </div>
 
@@ -498,17 +503,22 @@
             </div>
         </div>
 
-        <footer>
-            <p>Contact Me: <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a> | <a href="tel:+19784172728">978-417-2728</a></p>
-            <div>
-                <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
-                    <img src="instagram.jpg" alt="Instagram">
-                </a>
-                <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
-                    <img src="linkedin.jpg" alt="LinkedIn">
-                </a>
-            </div>
-        </footer>
+         <footer class="clean-footer">
+    <div class="footer-contact">
+        <strong>Contact Me:</strong>
+        <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a> |
+        <a href="tel:9784172728">978-417-2728</a>
+    </div>
+    <div class="footer-social">
+        <a href="https://www.instagram.com/jeremy_barry_" target="_blank" aria-label="Instagram">
+            <img src="instagram.jpg" alt="Instagram" class="footer-icon">
+        </a>
+        <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank" aria-label="LinkedIn">
+            <img src="linkedin.jpg" alt="LinkedIn" class="footer-icon">
+        </a>
+    </div>
+</footer>
+
     </div>
 
     <script>
