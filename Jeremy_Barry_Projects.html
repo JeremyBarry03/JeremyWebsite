@@ -161,29 +161,36 @@
 
         footer {
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 1.5rem 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 0.9rem;
         }
 
         footer a {
             color: #4CAF50;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         footer a:hover {
             color: #45a049;
         }
 
-        footer img {
-            width: 24px;
-            height: 24px;
-        }
+        .footer-icon {
+    height: 1.3rem;
+    width: auto;
+    vertical-align: middle;
+    position: relative;
+    top: 2px;
+    filter: grayscale(100%) brightness(200%);
+    transition: filter 0.3s ease;
+}
 
         @media (max-width: 768px) {
             .project-description {
@@ -212,7 +219,7 @@
                 <div class="project-card">
                     <h2 class="project-title">LiamBot – AI Assistant</h2>
                     <p class="project-description">
-                        Meet LiamBot: a nerdy, witty chatbot who says "Erm..." when he's thinking hard. Powered by OpenAI’s GPT-4o, he answers questions, drops facts, and occasionally morphs into LiamBron when basketball comes up.
+                        Meet LiamBot: a nerdy, witty chatbot who says "Erm..." when he's thinking hard. Powered by OpenAI's GPT-4o, he answers questions, drops facts, and occasionally morphs into LiamBron when basketball comes up.
                     </p>
                 <iframe src="https://liam-says-what-now.vercel.app/" tabindex="-1",scrolling="no",id="liambot-frame"></iframe>
                 </div>
@@ -247,20 +254,28 @@
             </div>
         </div>
 
-        <footer>
-            <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
-                <img src="instagram.jpg" alt="Instagram">
-            </a>
-            <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
-                <img src="linkedin.jpg" alt="LinkedIn">
-            </a>
-            <p>Contact me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a></p>
-        </footer>
+        <footer class="clean-footer">
+    <div class="footer-contact">
+        <strong>Contact Me:</strong>
+        <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a> |
+        <a href="tel:9784172728">978-417-2728</a>
+    </div>
+    <div class="footer-social">
+        <a href="https://www.instagram.com/jeremy_barry_" target="_blank" aria-label="Instagram">
+            <img src="instagram.jpg" alt="Instagram" class="footer-icon">
+        </a>
+        <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank" aria-label="LinkedIn">
+            <img src="linkedin.jpg" alt="LinkedIn" class="footer-icon">
+        </a>
+    </div>
+</footer>
+
+
     </div>
 
     <script>
         function goToAbout() {
-            window.location.href = "main_page_website.html#about";
+            window.location.href = "index.html#about";
         }
 
         window.addEventListener('load', () => {
