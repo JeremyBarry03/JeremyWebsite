@@ -2,149 +2,389 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BNZ4TFFE70');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-BNZ4TFFE70');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website About Jeremy</title>
     <style>
-        body {
-            font-family: 'Bookman Old Style', serif;
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
+            min-height: 100vh;
             background: url("IMG_5704.JPEG") no-repeat center center fixed;
             background-size: cover;
+            color: #333;
         }
 
-        h1 {
-            font-size: 3rem;
+        /* Intro Animation Screen */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .flying-number {
+            position: absolute;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            opacity: 0.8;
+            pointer-events: none;
+            user-select: none;
+            animation: float 4s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+
+        .continue-prompt {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px 50px;
             text-align: center;
+            backdrop-filter: blur(10px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .continue-prompt h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .continue-prompt p {
+            color: #00ffff;
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Typing Animation Screen */
+        .typing-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .typing-screen.fade-out {
+            opacity: 0;
+        }
+
+        .typing-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 40px 60px;
+            backdrop-filter: blur(10px);
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .typing-text {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: normal;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 3px solid black; /* Cursor effect */
-            width: 0; /* Hidden initially */
-            animation: typing 3s steps(15, end) forwards, blink 0.75s step-end infinite;
+            display: inline-block;
         }
 
-        p {
-            font-size: 1.2rem;
-            text-align: center;
-            margin: 10px 0;
-            opacity: 0; /* Hidden initially */
-            animation: fadeIn 3s forwards;
+        .typing-cursor {
+            color: #4CAF50;
+            animation: blink 1s step-end infinite;
         }
 
-        #resume-button, #projects-button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-family: 'Bookman Old Style', serif;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            opacity: 0; /* Hidden initially */
-            animation: fadeIn 3s forwards;
-            animation-delay: calc(3s * 12 / 15);
-        }
-
-        #resume-button:hover, #projects-button:hover {
-            background-color: #45a049;
-        }
-
-        .button-container {
+        /* Main Content */
+        .main-content {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .main-content.fade-in {
+            opacity: 1;
         }
 
         .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px auto; /* Reduced vertical margin */
-    width: 90%; /* Increased width for a more stretched layout */
-    max-width: 1000px; /* Adjusted for wider screens */
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px 20px; /* Reduced vertical padding */
-    text-align: left;
+            background: rgba(255, 245, 230, 0.95); /* Parchment-like background */
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            position: relative;
+            border: 1px solid #d4a373; /* Subtle border for letter vibe */
+        }
 
+        .content-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
 
+        .content-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .tab-content {
+            margin-top: 1rem;
         }
 
         .content-container h2 {
-            margin-bottom: 10px;
             color: #4CAF50;
-        }
-
-        .toggle-buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .toggle-buttons button {
-            padding: 10px 15px;
-            margin: 0 10px;
-            font-size: 1rem;
-            font-family: 'Bookman Old Style', serif;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .toggle-buttons button:hover {
-            background-color: #45a049;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
         }
 
         .about-container {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin: 20px auto;
-            width: 100%;
-            max-width: 800px;
+            align-items: flex-start;
+            gap: 1.5rem;
         }
 
         .about-container img {
-            margin-right: 20px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
             object-fit: cover;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #d4a373; /* Matching parchment border */
         }
 
-        .about-container p {
-            flex: 1;
+        .professional-label {
+            font-family: 'Georgia', serif;
+            color: #2c2c2c;
+            text-align: left;
+            line-height: 1.4;
+            padding: 0.5rem;
+            max-width: 500px;
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 15ch; }
+        .professional-label .name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .professional-label .title {
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .professional-label .institution {
+            font-size: 1rem;
+        }
+
+        .letter-content {
+            font-family: 'Georgia', serif; /* Handwritten-like font */
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #2c2c2c;
+            max-width: 100%;
+            position: relative;
+            padding: 1rem;
+            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Subtle paper texture */
+        }
+
+        .letter-content p {
+            margin: 0.8rem 0;
+            text-align: left;
+        }
+
+        .letter-content .salutation {
+            margin-bottom: 1.2rem;
+            font-style: italic;
+        }
+
+        .letter-content .closing {
+            margin-top: 1.2rem;
+            font-style: italic;
+        }
+
+        .letter-content .signature {
+            font-family: 'Dancing Script', cursive; /* Fancy signature font */
+            font-size: 1.5rem;
+            color: #2c2c2c;
+            margin-top: 0.5rem;
+        }
+
+        .content-container ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-container ul li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .content-container ul li:before {
+            content: '•';
+            color: #4CAF50;
+            position: absolute;
+            left: 0;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .toggle-buttons .group-tabs {
+            display: flex;
+            gap: 1rem;
+            background: none;
+        }
+
+        .toggle-buttons .group-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #4CAF50;
+        }
+
+        .toggle-buttons button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100px;
+            text-align: center;
+        }
+
+        .toggle-buttons button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem 0;
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #45a049;
+        }
+
+        footer img {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        /* Animations */
+        @keyframes float {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    10% {
+        transform: translateY(-30px) scale(1.2) rotate(15deg);
+    }
+    20% {
+        transform: translateX(15px) translateY(10px) scale(1.1) rotate(-30deg);
+    }
+    30% {
+        transform: translateX(-10px) translateY(-25px) scale(1.3) rotate(45deg);
+    }
+    40% {
+        transform: translateX(20px) translateY(0px) scale(1) rotate(-15deg);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.2) rotate(60deg);
+    }
+    60% {
+        transform: translateY(5px) scale(1.1) rotate(-45deg);
+    }
+    70% {
+        transform: translateX(-15px) translateY(-15px) scale(1.3) rotate(90deg);
+    }
+    80% {
+        transform: translateX(10px) translateY(10px) scale(1.1) rotate(-90deg);
+    }
+    90% {
+        transform: translateY(-20px) scale(1.2) rotate(135deg);
+    }
+    100% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+}
+
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.95; }
         }
 
         @keyframes blink {
-            50% { border-color: transparent; }
+            50% { opacity: 0; }
         }
 
         @keyframes fadeIn {
@@ -152,84 +392,310 @@
             to { opacity: 1; }
         }
 
-        footer {
-            width: 100%;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 0;
-            margin-top: auto;
+        .hidden {
+            display: none !important;
         }
 
-        footer a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+                text-align: center;
+            }
 
-        footer img {
-            width: 24px;
-            height: 24px;
-            margin: 0 10px;
+            .about-container img {
+                margin-bottom: 1rem;
+            }
+            
+
+            .professional-label {
+                text-align: center;
+                max-width: 100%;
+                margin: 0.5rem auto;
+            }
+            
+
+            .toggle-buttons {
+                flex-direction: column;
+            }
+
+            .toggle-buttons .group-tabs {
+                flex-direction: column;
+            }
+
+            .toggle-buttons .group-nav {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .toggle-buttons button {
+                width: 100%;
+            }
         }
+        .headshot-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+}
+
+
+        /* Import handwritten font */
+        @import url('https://fonts.googleapis.com/css2?family=Georgia&Dancing+Script:wght@400;700&display=swap');
     </style>
 </head>
 <body>
-    <h1>Hello, I'm Jeremy</h1>
-    <p class="delayed">Welcome to my Website</p>
-    <div class="button-container">
-        <button id="resume-button" onclick="location.href='Jeremy_Barry_Resume.pdf'">View My Resume</button>
-        <button id="projects-button" onclick="location.href='Jeremy_Barry_Projects.html'">Projects</button>
+    <!-- Intro Animation Screen -->
+    <div class="intro-screen" id="introScreen">
+        <div class="continue-prompt" id="continuePrompt" style="display: none;">
+            <h2>Press Enter to Continue</h2>
+            <p>or click anywhere</p>
+        </div>
     </div>
 
-    <div class="content-container">
-        <div id="content-about" class="about-container">
-            <img src="IMG_8497.JPEG" alt="Jeremy's photo">
-            <div>
-                <h2>About Me</h2>
-                <p>Hi! I'm Jeremy, a freshman majoring in data science and mathematics at the College of William & Mary. I thrive on tackling complex data challenges and excel at crafting innovative solutions in data analysis with business applications. In my free time, I enjoy hiking, traveling, and pushing myself to learn new skills and technologies.</p>
+    <!-- Typing Animation Screen -->
+    <div class="typing-screen" id="typingScreen">
+        <div class="typing-container">
+            <div class="typing-text">
+                <span id="typedText"></span>
+                <span class="typing-cursor">|</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website Content -->
+    <div class="main-content" id="mainContent">
+        <div class="content-container">
+            <div class="content-section about-container active" id="content-section">
+                <div class="headshot-info">
+                <img src="IMG_8497.JPEG" alt="Jeremy's photo">
+                <div class="professional-label">
+                    <div class="name">Jeremy Barry</div>
+                    <div class="title">Data Science, Mathematics & Finance Student</div>
+                    <div class="institution">College of William & Mary</div>
+                    </div>
+                </div>
+                <div class="tab-content letter-content">
+                    <p class="salutation">Hello!</p>
+                    <p>I’m Jeremy Barry, from Newburyport, Massachusetts. I’m currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side. 
+                    <p>I absolutely love data. From exploring patterns to breaking down complex problems, I genuinely enjoy the process of making sense of complex information and turning it into meaningful stories.</p>
+                    <p>This summer, I’m splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
+                    <p class="closing">If anything I said resonates with you, I’d love to connect. Drop me a line, and let’s start a conversation!</p>
+                    <p class="closing">Best regards,</p>
+                    <p class="signature">Jeremy Barry</p>
+                </div>
+            </div>
+
+            <div class="toggle-buttons">
+                <div class="group-tabs">
+                    <button onclick="switchContent('about')">About Me</button>
+                    <button onclick="switchContent('skills')">Skills</button>
+                </div>
+                <div class="group-nav">
+                    <button onclick="window.location.href='Jeremy_Barry_Resume.pdf'">Resume</button>
+                    <button onclick="window.location.href='Jeremy_Barry_Projects.html'">Projects</button>
+                </div>
             </div>
         </div>
 
-        <div id="content-skills" style="display: none;">
-            <h2>Skills</h2>
-            <ul>
-                <li>Data Analysis: Google Analytics, Excel, R,  Python (Pandas, NumPy)</li>
-                <li>Data Visualization: Matplotlib, Seaborn, Power BI</li>
-                <li>Programming: Python, Java, HTML</li>
-                <li>Soft Skills: Leadership, Communication, Creativity, Adaptability</li>
-                <li>Random: Eating Pizza, Attempting 5Ks</li>
-            </ul>
-        </div>
-
-        <div class="toggle-buttons">
-            <button onclick="showAbout()">About Me</button>
-            <button onclick="showSkills()">Skills</button>
-        </div>
+        <footer>
+            <p>Contact Me: <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a> | <a href="tel:+19784172728">978-417-2728</a></p>
+            <div>
+                <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
+                    <img src="instagram.jpg" alt="Instagram">
+                </a>
+                <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
+                    <img src="linkedin.jpg" alt="LinkedIn">
+                </a>
+            </div>
+        </footer>
     </div>
 
-    <footer>
-        <p>Contact Me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a> | <a href="tel:+19784172728">978-417-2728</a></p>
-        <div>
-            <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
-                <img src="instagram.jpg" alt="Instagram">
-            </a>
-            <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
-                <img src="linkedin.jpg" alt="LinkedIn">
-            </a>
-        </div>
-    </footer>
-
     <script>
-        function showAbout() {
-            document.getElementById('content-about').style.display = 'flex';
-            document.getElementById('content-skills').style.display = 'none';
+        let currentScreen = 'intro';
+        let showContinue = false;
+
+        // Create flying numbers
+        function createFlyingNumbers() {
+            const introScreen = document.getElementById('introScreen');
+            for (let i = 0; i < 80; i++) {
+                const number = document.createElement('span');
+                number.className = 'flying-number';
+                number.textContent = Math.floor(Math.random() * 10);
+                number.style.left = Math.random() * 100 + 'vw';
+                number.style.top = Math.random() * 100 + 'vh';
+                number.style.fontSize = (Math.random() * 24 + 14) + 'px';
+                number.style.animationDelay = Math.random() * 1 + 's';
+                number.style.animationDuration = (4 + Math.random() * 6) + 's';
+                introScreen.appendChild(number);
+                const colors = ['#00ffff', '#ff6ec7', '#f9f871', '#ff8c00', '#32cd32'];
+                number.style.color = colors[Math.floor(Math.random() * colors.length)];
+                number.style.transform = `translateY(${Math.random() * 100 - 50}vh)`;
+                number.style.opacity = Math.random() * 0.5 + 0.5;
+            }
         }
 
-        function showSkills() {
-            document.getElementById('content-about').style.display = 'none';
-            document.getElementById('content-skills').style.display = 'block';
+        // Show continue prompt after 2 seconds
+        function showContinuePrompt() {
+            setTimeout(() => {
+                document.getElementById('continuePrompt').style.display = 'block';
+                showContinue = true;
+
+                // Animate numbers to center and fade out
+                const numbers = document.querySelectorAll('.flying-number');
+                numbers.forEach((number, index) => {
+                    setTimeout(() => {
+                        number.style.transition = 'all 3s ease-out';
+                        number.style.transform = `translate(${window.innerWidth / 2 - 50}px, ${window.innerHeight / 2 - 20}px) scale(0)`;
+                        number.style.opacity = '0';
+                    }, index * 50);
+                });
+            }, 2000);
         }
+
+        // Handle continue to typing screen
+        function continueToTyping() {
+            if (currentScreen === 'intro' && showContinue) {
+                document.getElementById('introScreen').classList.add('hidden');
+                document.getElementById('typingScreen').classList.remove('hidden');
+                currentScreen = 'typing';
+                startTypingAnimation();
+            }
+        }
+
+        // Typing animation
+        function startTypingAnimation() {
+            const typedTextElement = document.getElementById('typedText');
+            let phase = 1;
+            let i = 0;
+            let pause = false;
+
+            const messages = ["Hello I'm Jeremy...", "Welcome to my Website :)"];
+            const typingSpeed = 50;
+            const backspaceSpeed = 30;
+            const pauseDuration = 1000;
+
+            function typeText() {
+                const interval = setInterval(() => {
+                    if (phase === 1) {
+                        if (i < messages[0].length) {
+                            typedTextElement.textContent = messages[0].slice(0, i + 1);
+                            i++;
+                        } else {
+                            clearInterval(interval);
+                            setTimeout(() => pause = true, 0);
+                            setTimeout(() => {
+                                pause = false;
+                                phase = 2;
+                                i = messages[0].length - 1;
+                                backspaceText();
+                            }, pauseDuration);
+                        }
+                    }
+                }, typingSpeed);
+            }
+
+            function backspaceText() {
+                const interval = setInterval(() => {
+                    if (phase === 2) {
+                        if (i >= 0) {
+                            typedTextElement.textContent = messages[0].slice(0, i);
+                            i--;
+                        } else {
+                            clearInterval(interval);
+                            phase = 3;
+                            i = 0;
+                            typeWelcome();
+                        }
+                    }
+                }, backspaceSpeed);
+            }
+
+            function typeWelcome() {
+                const interval = setInterval(() => {
+                    if (phase === 3) {
+                        if (i < messages[1].length) {
+                            typedTextElement.textContent = messages[1].slice(0, i + 1);
+                            i++;
+                        } else {
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                document.getElementById('typingScreen').classList.add('fade-out');
+                                setTimeout(() => {
+                                    document.getElementById('typingScreen').classList.add('hidden');
+                                    document.getElementById('mainContent').classList.add('fade-in');
+                                    document.querySelector('.content-container').classList.add('fade-in');
+                                }, 600);
+                            }, 500);
+                        }
+                    }
+                }, typingSpeed);
+            }
+
+            typeText();
+        }
+
+        // Switch content sections with smooth transition
+        function switchContent(type) {
+            const section = document.getElementById('content-section');
+            const tabContent = section.querySelector('.tab-content');
+
+            if (type === 'about') {
+                tabContent.innerHTML = `
+                    <div class="letter-content">
+                        <p class="salutation">Dear Friend,</p>
+                        <p>I’m Jeremy Barry, hailing from the charming town of Newburyport, Massachusetts. I’m currently immersed in my studies at the College of William & Mary, pursuing Data Science and Mathematics, with a touch of Finance on the side. Numbers are my passion—whether I’m crafting insightful dashboards or untangling the chaos of a spreadsheet, I find joy in transforming data into meaningful stories.</p>
+                        <p>This summer, I’m savoring the best of both worlds: shucking fresh oysters back home and diving into the entrepreneurial spirit of the San Francisco Bay Area with a startup venture.</p>
+                        <p class="closing">If these words resonate with you, I’d be delighted to connect. Drop me a line, and let’s start a conversation!</p>
+                        <p class="closing">Warm regards,</p>
+                        <p class="signature">Jeremy Barry</p>
+                    </div>
+                `;
+            } else if (type === 'skills') {
+                tabContent.innerHTML = `
+                    <h2>Skills</h2>
+                    <ul>
+                        <li>Data Analysis: Excel, R, Python (Pandas, NumPy), Amazon Web Services</li>
+                        <li>Data Visualization: Matplotlib, Seaborn, Power BI, Amazon Web Services</li>
+                        <li>Programming: Python, SQL, HTML</li>
+                        <li>Soft Skills: Leadership, Communication, Creativity, Adaptability</li>
+                        <li>Random: Eating Pizza, Attempting 5Ks</li>
+                    </ul>
+                `;
+            }
+        }
+
+        // Initialize animation
+        window.addEventListener('load', () => {
+            createFlyingNumbers();
+            showContinuePrompt();
+
+         const isDirectToAbout = window.location.hash === "#about";
+
+    if (isDirectToAbout) {
+        // Skip intro animations
+        document.getElementById('introScreen').classList.add('hidden');
+        document.getElementById('typingScreen').classList.add('hidden');
+        document.getElementById('mainContent').classList.add('fade-in');
+        document.querySelector('.content-container').classList.add('fade-in');
+    } else {
+        // Normal flow with animation
+        createFlyingNumbers();
+        showContinuePrompt();
+    }
+});
+
+        // Event listeners for navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                continueToTyping();
+            }
+        });document.getElementById('mainContent').classList.add('fade-in');
+
+
+        document.addEventListener('click', () => {
+            continueToTyping();
+        });
     </script>
 </body>
 </html>
-
