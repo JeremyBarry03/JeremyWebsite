@@ -1,52 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BNZ4TFFE70');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeremy's Projects</title>
     <style>
-        body {
-            font-family: 'Bookman Old Style', serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a;
-            color: #ccc;
-            text-align: center;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: url("IMG_5704.JPEG") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        body.fade-in {
+            opacity: 1;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
+    flex-wrap: wrap;
+}
+
+.header-bar h1 {
+    font-size: 2rem;
+    color: #4CAF50;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .header-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-bar h1 {
+        text-align: center;
+    }
+
+    .back-home-button {
+        align-self: center;
+    }
+}
+
+
+        .content-container {
+            background: rgba(255, 245, 230, 0.95);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d4a373;
+            margin-bottom: 2rem;
         }
 
         h1 {
-            margin-top: 20px;
-            font-size: 2.5rem;
-            color: #FFFFFF;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #4CAF50;
         }
 
         .projects-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 30px;
             gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
         }
 
         .project-card {
-            background: #333;
-            border: 1px solid #444;
+            background: rgba(255, 245, 230, 0.95);
+            border: 1px solid #d4a373;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 25px;
-            width: 100%;
-            max-width: 750px;
             text-align: center;
             transition: transform 0.2s;
         }
@@ -62,51 +111,69 @@
         }
 
         .project-description {
-            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #2c2c2c;
             margin-bottom: 20px;
-            color: #ddd;
-            line-height: 1.5;
         }
 
         iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    overflow: hidden;
+    display: block;
+}
+
+
+        img {
+            width: 90%;
+            max-width: 350px;
+            margin-bottom: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .view-pdf-button, .back-home-button {
+        .view-pdf-button,
+        .back-home-button {
             display: inline-block;
             margin-top: 15px;
             padding: 10px 20px;
             font-size: 1rem;
-            font-family: 'Bookman Old Style', serif;
             background-color: #4CAF50;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
 
-        .view-pdf-button:hover, .back-home-button:hover {
+        .view-pdf-button:hover,
+        .back-home-button:hover {
             background-color: #45a049;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         footer {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #000;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
             color: white;
-            text-align: center;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         footer a {
             color: #4CAF50;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.2s;
         }
 
         footer a:hover {
@@ -116,68 +183,95 @@
         footer img {
             width: 24px;
             height: 24px;
-            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 1rem;
+            }
+
+            iframe {
+                height: 400px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Jeremy's Projects</h1>
-    <button class="back-home-button" onclick="location.href='index.html'">Back to Home</button>
+    <div class="main-content" id="mainContent">
+        <div class="content-container">
+            <div class="header-bar">
+            <h1>Jeremy's Projects</h1>
+            <button class="back-home-button" onclick="goToAbout()">Back to Home</button>
+                </div>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h2 class="project-title">LiamBot – AI Assistant</h2>
+                    <p class="project-description">
+                        Meet LiamBot: a nerdy, witty chatbot who says "Erm..." when he's thinking hard. Powered by OpenAI’s GPT-4o, he answers questions, drops facts, and occasionally morphs into LiamBron when basketball comes up.
+                    </p>
+                <iframe src="https://liam-says-what-now.vercel.app/" tabindex="-1",scrolling="no",id="liambot-frame"></iframe>
+                </div>
 
-    <div class="projects-container">
-        <!-- Project: LiamBot -->
-        <div class="project-card">
-            <h2 class="project-title">LiamBot – AI Assistant</h2>
-            <p class="project-description">
-                Meet LiamBot: a nerdy, witty chatbot who says "Erm..." when he's thinking hard. Powered by OpenAI’s GPT-4o, he answers questions, drops facts, and occasionally  morphs into LiamBron when basketball comes up. Give him a try below:
-            </p>
-            <iframe src="https://liam-says-what-now.vercel.app/"></iframe>
-        </div>
+                <div class="project-card">
+                    <h2 class="project-title">Radiation Data Analysis</h2>
+                    <a href="projects/C10report.pdf" target="_blank" class="view-pdf-button">View Report</a>
+                    <p class="project-description">
+                        At C-10 Research & Education Foundation, I analyzed over 10,000 radiation reports across 15 datasets using Excel. With pivot tables, conditional formatting, and charts, I uncovered a 314% variance that led to a 30% faster reporting process, reviewed by the NH Department of Health.
+                    </p>
+                </div>
 
-        <!-- Project: Radiation Data Analysis -->
-        <div class="project-card">
-            <h2 class="project-title">Radiation Data Analysis</h2>
-            <a href="C10report.pdf" target="_blank" class="view-pdf-button">View Report</a>
-            <p class="project-description">
-                At C-10 Research & Education Foundation, I analyzed over 10,000 radiation reports across 15 datasets using Excel. With pivot tables, conditional formatting, and charts, I uncovered a 314% variance that led to a 30% faster reporting process, reviewed by the NH Department of Health.
-            </p>
-        </div>
+                <div class="project-card">
+                    <h2 class="project-title">Customer Segmentation Analysis</h2>
+                    <img src="projects/cluster/Customer_Clusters_SeparateGraphs.png" alt="Customer Clusters Visualization">
+                    <p class="project-description">
+                        I used Python and the RFM model to group customers by behavior, then applied K-Means clustering to generate strategic insights. Visualized the segments for stakeholders.
+                    </p>
+                    <a href="projects/cluster/Cluster_Summary_Report.csv" download class="view-pdf-button">Download Cluster Summary</a>
+                    <a href="projects/cluster/Customer_Segmentation_Report.txt" download class="view-pdf-button">Download Text Report</a>
+                </div>
 
-        <!-- Project: Customer Segmentation -->
-        <div class="project-card">
-            <h2 class="project-title">Customer Segmentation Analysis</h2>
-            <img src="Customer_Clusters_SeparateGraphs.png" alt="Customer Clusters Visualization" style="width:90%; margin-bottom: 15px;">
-            <p class="project-description">
-                I used Python and the RFM (Recency, Frequency, Monetary) model to group customers by behavior, then applied K-Means clustering to generate strategic business insights. Created visualizations to help stakeholders better understand the segments.
-            </p>
-            <div>
-                <a href="Cluster_Summary_Report.csv" download class="view-pdf-button">Download Cluster Summary</a>
-                <a href="Customer_Segmentation_Report.txt" download class="view-pdf-button">Download Text Report</a>
+                <div class="project-card">
+                    <h2 class="project-title">Loan Payment Calculator</h2>
+                    <p class="project-description">
+                        Built an interactive loan repayment calculator using Matplotlib, Seaborn, and Pandas to visualize payoff timelines.
+                    </p>
+                    <img src="projects/loanCalculator/LoanGUI.png" alt="Loan Calculator GUI">
+                    <img src="projects/loanCalculator/LBG.png" alt="Loan Balance Graph">
+                    <a href="projects/loanCalculator/loan.py" target="_blank" class="view-pdf-button">View Code</a>
+                </div>
             </div>
         </div>
 
-        <!-- Project: Loan Calculator -->
-        <div class="project-card">
-            <h2 class="project-title">Loan Payment Calculator</h2>
-            <p class="project-description">
-                Enhanced a school project with an interactive GUI and visualizations using Matplotlib, Seaborn, and Pandas to calculate and visualize loan repayments.
-            </p>
-            <img src="LoanGUI.png" alt="Loan Calculator GUI" style="width:80%; max-width:350px; margin-bottom: 15px;">
-            <img src="LBG.png" alt="Loan Balance Graph" style="width:80%; max-width:350px; margin-bottom: 15px;">
-            <a href="loan.py" target="_blank" class="view-pdf-button">View Code</a>
-        </div>
-    </div>
-
-    <footer>
-        <p>Contact me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a></p>
-        <div>
+        <footer>
             <a href="https://www.instagram.com/jeremy_barry_" target="_blank">
                 <img src="instagram.jpg" alt="Instagram">
             </a>
             <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank">
                 <img src="linkedin.jpg" alt="LinkedIn">
             </a>
-        </div>
-    </footer>
+            <p>Contact me: <a href="mailto:jeremyebarry@gmail.com">jeremyebarry@gmail.com</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function goToAbout() {
+            window.location.href = "main_page_website.html#about";
+        }
+
+        window.addEventListener('load', () => {
+    document.body.classList.add('fade-in');
+    document.getElementById('mainContent').classList.add('fade-in');
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 100); // slight delay gives the iframe time to settle
+});
+
+        
+    </script>
 </body>
 </html>
