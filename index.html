@@ -126,10 +126,40 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
         
         .enter-prompt.visible {
             opacity: 0.9;
+            pointer-events: auto;
+        }
+        
+        .enter-button {
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            color: var(--text-tertiary);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            opacity: 0.5;
+        }
+        
+        .enter-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .enter-button:active {
+            transform: translateY(0);
         }
         
         /* Intro Screen Overlay */
@@ -189,10 +219,41 @@
             opacity: 1;
             transition: opacity 0.5s ease-in-out;
             animation: pulse 2s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
         
         .intro-enter-prompt.hidden {
             opacity: 0;
+            pointer-events: none;
+        }
+        
+        .intro-enter-button {
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            color: var(--text-tertiary);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            opacity: 0.5;
+            animation: none;
+        }
+        
+        .intro-enter-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .intro-enter-button:active {
+            transform: translateY(0);
         }
         
         @keyframes pulse {
@@ -527,13 +588,19 @@
         </div>
         
         <!-- Enter Prompt Text -->
-        <div class="enter-prompt" id="enterPrompt">Press Enter to continue</div>
+        <div class="enter-prompt" id="enterPrompt">
+            <span>Press Enter to continue</span>
+            <button class="enter-button" onclick="handleEnterButton('particle')">Enter</button>
+        </div>
     </section>
     
     <!-- Intro Screen -->
     <div class="intro-overlay" id="introOverlay">
         <div class="intro-typing" id="introTyping"></div>
-        <div class="intro-enter-prompt" id="introEnterPrompt">Press Enter to Continue</div>
+        <div class="intro-enter-prompt" id="introEnterPrompt">
+            <span>Press Enter to Continue</span>
+            <button class="intro-enter-button" onclick="handleEnterButton('intro')">Enter</button>
+        </div>
     </div>
     
     <!-- Main Website Content -->
@@ -828,6 +895,18 @@
                     }
                 });
             });
+        }
+        
+        // Handle Enter button clicks
+        function handleEnterButton(phase) {
+            if (phase === 'intro') {
+                startIntroTyping();
+            } else if (phase === 'particle') {
+                hideEnterPrompt();
+                setTimeout(() => {
+                    startIntroTyping();
+                }, 1000);
+            }
         }
         
         // Global keyboard handler
