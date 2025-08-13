@@ -13,143 +13,223 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeremy's Website</title>
     <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animation.css">
     <style>
-        /* Global Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        /* Page-specific styles */
+        body {
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        /* Hero Section */
+        .new-hero {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 0.8, 0.31, 1);
+        }
+        
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hero-content.immediate {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: none !important;
+        }
+        
+        .hero-headline {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: var(--font-bold);
+            color: var(--text);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        
+        .hero-typing {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: var(--font-medium);
+            color: var(--text-secondary);
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 0.8, 0.31, 1) 0.3s;
+        }
+        
+        .hero-actions.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hero-actions.immediate {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: none !important;
+        }
+        
+        /* Enter Prompt Text */
+        .enter-prompt {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-tertiary);
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            text-align: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        
+        .enter-prompt.visible {
+            opacity: 0.9;
+        }
+        
+        /* Intro Screen Overlay */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            background: url("IMG_5704.JPEG") no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-        }
-
-        /* Intro Animation Screen */
-        .intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 1000;
-            overflow: hidden;
-        }
-
-        .flying-number {
-            position: absolute;
-            color: #00ffff;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            opacity: 0.8;
-            pointer-events: none;
-            user-select: none;
-            animation: float 4s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
-        }
-
-        .continue-prompt {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00ffff;
-            border-radius: 20px;
-            padding: 30px 50px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        .continue-prompt h2 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: normal;
-        }
-
-        .continue-prompt p {
-            color: #00ffff;
-            font-size: 1.2rem;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Typing Animation Screen */
-        .typing-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
+            gap: 2rem;
             opacity: 1;
-            transition: opacity 0.3s ease-out;
+            transition: opacity 0.8s ease-out;
         }
-
-        .typing-screen.fade-out {
+        
+        .intro-overlay.hidden {
             opacity: 0;
+            pointer-events: none;
         }
-
-        .typing-container {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 40px 60px;
-            backdrop-filter: blur(10px);
-            max-width: 80%;
-            text-align: center;
-        }
-
-        .typing-text {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: normal;
+        
+        .intro-typing {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: var(--font-medium);
+            color: var(--text);
+            font-family: var(--font-sans);
+            min-height: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             white-space: nowrap;
             overflow: hidden;
-            display: inline-block;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2.5rem;
+            transition: all 0.3s ease-in-out;
         }
-
-        .typing-cursor {
-            color: #4CAF50;
-            animation: blink 1s step-end infinite;
+        
+        .intro-typing.typing {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: none;
+        }
+        
+        .intro-enter-prompt {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: var(--font-medium);
+            color: var(--text-tertiary);
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .intro-enter-prompt.hidden {
+            opacity: 0;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
 
         /* Main Content */
         .main-content {
             width: 100%;
             max-width: 800px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: var(--space-lg);
+            margin: 0 auto;
             opacity: 0;
             transition: opacity 0.6s ease-in;
+            position: relative;
+            z-index: 2;
         }
-
+        
         .main-content.fade-in {
             opacity: 1;
         }
+        
+        .main-content.immediate {
+            opacity: 1 !important;
+            transition: none !important;
+        }
 
         .content-container {
-            background: rgba(255, 245, 230, 0.95); /* Parchment-like background */
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4xl);
             width: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
+            margin-bottom: var(--space-3xl);
             position: relative;
-            border: 1px solid #d4a373; /* Subtle border for letter vibe */
+            border: 1px solid var(--border);
+            z-index: 3;
         }
 
         .content-section {
@@ -168,15 +248,16 @@
         }
 
         .content-container h2 {
-            color: #4CAF50;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            color: var(--brand);
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-lg);
         }
 
         .about-container {
             display: flex;
             align-items: flex-start;
-            gap: 1.5rem;
+            gap: var(--space-xl);
         }
 
         .about-container img {
@@ -184,65 +265,74 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border: 2px solid #d4a373; /* Matching parchment border */
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border);
+            transition: transform var(--dur-base) var(--ease);
+        }
+        
+        .about-container img:hover {
+            transform: scale(1.05);
         }
 
         .professional-label {
-            font-family: 'Georgia', serif;
-            color: #2c2c2c;
+            font-family: var(--font-serif);
+            color: var(--text);
             text-align: left;
-            line-height: 1.4;
-            padding: 0.5rem;
+            line-height: var(--leading-snug);
+            padding: var(--space-sm);
             max-width: 500px;
         }
 
         .professional-label .name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 0.3rem;
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-xs);
+            color: var(--text);
         }
 
         .professional-label .title {
-            font-size: 1rem;
+            font-size: var(--text-base);
             font-style: italic;
+            color: var(--text-secondary);
         }
 
         .professional-label .institution {
-            font-size: 1rem;
+            font-size: var(--text-base);
+            color: var(--text-secondary);
         }
 
         .letter-content {
-            font-family: 'Georgia', serif; /* Handwritten-like font */
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #2c2c2c;
+            font-family: var(--font-serif);
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
             max-width: 100%;
             position: relative;
-            padding: 1rem;
-            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Subtle paper texture */
+            padding: var(--space-lg);
         }
 
         .letter-content p {
-            margin: 0.8rem 0;
+            margin: var(--space-md) 0;
             text-align: left;
         }
 
         .letter-content .salutation {
-            margin-bottom: 1.2rem;
+            margin-bottom: var(--space-lg);
             font-style: italic;
+            color: var(--text);
         }
 
         .letter-content .closing {
-            margin-top: 1.2rem;
+            margin-top: var(--space-lg);
             font-style: italic;
+            color: var(--text);
         }
 
         .letter-content .signature {
-            font-family: 'Dancing Script', cursive; /* Fancy signature font */
-            font-size: 1.5rem;
-            color: #2c2c2c;
-            margin-top: 0.5rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: var(--text-xl);
+            color: var(--brand);
+            margin-top: var(--space-sm);
         }
 
         .content-container ul {
@@ -267,135 +357,99 @@
 
         .toggle-buttons {
             display: flex;
-            gap: 1rem;
+            gap: var(--space-lg);
             justify-content: center;
-            margin-top: 1.5rem;
+            margin-top: var(--space-xl);
             flex-wrap: wrap;
         }
 
         .toggle-buttons .group-tabs {
             display: flex;
-            gap: 1rem;
+            gap: var(--space-lg);
             background: none;
         }
 
-        .toggle-buttons .group-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 2px solid #4CAF50;
-        }
 
         .toggle-buttons button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 500;
-            background-color: #4CAF50;
+            padding: var(--space-md) var(--space-lg);
+            font-size: var(--text-base);
+            font-weight: var(--font-medium);
+            background-color: var(--brand);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all var(--dur-base) var(--ease);
             width: 100px;
             text-align: center;
         }
 
         .toggle-buttons button:hover {
-            background-color: #45a049;
+            background-color: var(--brand-dark);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .toggle-buttons button:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
         }
 
         /* Footer */
         footer {
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 1rem 0;
+            background: var(--surface);
+            color: var(--text);
+            padding: var(--space-2xl) 0;
             margin-top: auto;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 3;
         }
 
-        footer p {
-            font-size: 0.9rem;
+        footer p, footer div {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
         }
 
         footer a {
-            color: #4CAF50;
+            color: var(--brand);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color var(--dur-base) var(--ease);
         }
 
         footer a:hover {
-            color: #45a049;
+            color: var(--brand-light);
         }
 
         .footer-icon {
-    height: 1.3rem;
-    width: auto;
-    vertical-align: middle;
-    position: relative;
-    top: 2px;
-    filter: grayscale(100%) brightness(200%);
-    transition: filter 0.3s ease;
-}
+            height: 1.3rem;
+            width: auto;
+            vertical-align: middle;
+            position: relative;
+            top: 2px;
+            filter: grayscale(100%) brightness(200%);
+            transition: filter var(--dur-base) var(--ease);
+        }
+        
+        .footer-icon:hover {
+            filter: none;
+        }
 
 
 
         /* Animations */
-        @keyframes float {
-    0% {
-        transform: translateY(0) scale(1) rotate(0deg);
-        opacity: 0.8;
-    }
-    10% {
-        transform: translateY(-30px) scale(1.2) rotate(15deg);
-    }
-    20% {
-        transform: translateX(15px) translateY(10px) scale(1.1) rotate(-30deg);
-    }
-    30% {
-        transform: translateX(-10px) translateY(-25px) scale(1.3) rotate(45deg);
-    }
-    40% {
-        transform: translateX(20px) translateY(0px) scale(1) rotate(-15deg);
-    }
-    50% {
-        transform: translateY(-10px) scale(1.2) rotate(60deg);
-    }
-    60% {
-        transform: translateY(5px) scale(1.1) rotate(-45deg);
-    }
-    70% {
-        transform: translateX(-15px) translateY(-15px) scale(1.3) rotate(90deg);
-    }
-    80% {
-        transform: translateX(10px) translateY(10px) scale(1.1) rotate(-90deg);
-    }
-    90% {
-        transform: translateY(-20px) scale(1.2) rotate(135deg);
-    }
-    100% {
-        transform: translateY(0px) scale(1) rotate(0deg);
-        opacity: 0.8;
-    }
-}
-
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.95; }
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Custom animations for this page */
+        @keyframes heroEnter {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hidden {
@@ -404,22 +458,29 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .hero-content {
+                padding: var(--space-lg);
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             .about-container {
                 flex-direction: column;
                 text-align: center;
             }
 
             .about-container img {
-                margin-bottom: 1rem;
+                margin-bottom: var(--space-lg);
             }
-            
 
             .professional-label {
                 text-align: center;
                 max-width: 100%;
-                margin: 0.5rem auto;
+                margin: var(--space-sm) auto;
             }
-            
 
             .toggle-buttons {
                 flex-direction: column;
@@ -429,52 +490,58 @@
                 flex-direction: column;
             }
 
-            .toggle-buttons .group-nav {
-                flex-direction: column;
-                width: 100%;
-            }
-
             .toggle-buttons button {
                 width: 100%;
             }
+            
+            .main-content {
+                padding: var(--space-md);
+            }
         }
+        
         .headshot-info {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-}
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
 
 
-        /* Import handwritten font */
-        @import url('https://fonts.googleapis.com/css2?family=Georgia&Dancing+Script:wght@400;700&display=swap');
+        /* Import additional fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
     </style>
 </head>
 <body>
-    <!-- Intro Animation Screen -->
-    <div class="intro-screen" id="introScreen">
-        <div class="continue-prompt" id="continuePrompt" style="display: none;">
-            <h2>Click Anywhere To Continue</h2>
-            <p>or press enter </p>
-        </div>
-    </div>
-
-    <!-- Typing Animation Screen -->
-    <div class="typing-screen" id="typingScreen">
-        <div class="typing-container">
-            <div class="typing-text">
-                <span id="typedText"></span>
-                <span class="typing-cursor">|</span>
+    
+    <!-- Hero Section with Canvas -->
+    <section class="new-hero" id="hero">
+        <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        <div class="hero-content" id="heroContent">
+            <h1 class="hero-headline">Jeremy Barry</h1>
+            <div class="hero-typing" id="heroTyping"></div>
+            <div class="hero-actions" id="heroActions">
+                <a href="#about" class="btn btn--primary">About Me</a>
+                <a href="Jeremy_Barry_Projects.html" class="btn btn--secondary">Projects</a>
+                <a href="Jeremy_Barry_Resume.pdf" class="btn btn--subtle" target="_blank">Resume</a>
             </div>
         </div>
+        
+        <!-- Enter Prompt Text -->
+        <div class="enter-prompt" id="enterPrompt">Press Enter to continue</div>
+    </section>
+    
+    <!-- Intro Screen -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-typing" id="introTyping"></div>
+        <div class="intro-enter-prompt" id="introEnterPrompt">Press Enter to Continue</div>
     </div>
-
+    
     <!-- Main Website Content -->
     <div class="main-content" id="mainContent">
-        <div class="content-container">
+        <div class="content-container" id="about">
             <div class="content-section about-container active" id="content-section">
                 <div class="headshot-info">
-                <img src="IMG_8497.JPEG" alt="Jeremy's photo">
+                <img src="IMG_8497.JPEG" alt="Jeremy's professional headshot">
                 <div class="professional-label">
                     <div class="name">Jeremy Barry</div>
                     <div class="title">Data Science, Mathematics & Finance Student</div>
@@ -483,10 +550,10 @@
                 </div>
                 <div class="tab-content letter-content">
                     <p class="salutation">Hello!</p>
-                    <p>I’m Jeremy Barry, from Newburyport, Massachusetts. I’m currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side. 
+                    <p>I'm Jeremy Barry, from Newburyport, Massachusetts. I'm currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side.</p>
                     <p>I absolutely love data. From exploring patterns to breaking down complex problems, I genuinely enjoy the process of making sense of complex information and turning it into meaningful stories.</p>
-                    <p>This summer, I’m splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
-                    <p class="closing">If anything I said resonates with you, I’d love to connect. Drop me a line, and let’s start a conversation!</p>
+                    <p>This summer, I'm splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
+                    <p class="closing">If anything I said resonates with you, I'd love to connect. Drop me a line, and let's start a conversation!</p>
                     <p class="closing">Best regards,</p>
                     <p class="signature">Jeremy Barry</p>
                 </div>
@@ -496,8 +563,6 @@
                 <div class="group-tabs">
                     <button onclick="switchContent('about')">About Me</button>
                     <button onclick="switchContent('skills')">Skills</button>
-                </div>
-                <div class="group-nav">
                     <button onclick="window.location.href='Jeremy_Barry_Resume.pdf'">Resume</button>
                     <button onclick="window.location.href='Jeremy_Barry_Projects.html'">Projects</button>
                 </div>
@@ -522,131 +587,203 @@
 
     </div>
 
+    <!-- Scripts -->
+    <script src="lib/particles/canvasField.js"></script>
+    <script src="lib/typing.js"></script>
     <script>
-        let currentScreen = 'intro';
-        let showContinue = false;
-
-        // Create flying numbers
-        function createFlyingNumbers() {
-            const introScreen = document.getElementById('introScreen');
-            for (let i = 0; i < 80; i++) {
-                const number = document.createElement('span');
-                number.className = 'flying-number';
-                number.textContent = Math.floor(Math.random() * 10);
-                number.style.left = Math.random() * 100 + 'vw';
-                number.style.top = Math.random() * 100 + 'vh';
-                number.style.fontSize = (Math.random() * 24 + 14) + 'px';
-                number.style.animationDelay = Math.random() * 1 + 's';
-                number.style.animationDuration = (4 + Math.random() * 6) + 's';
-                introScreen.appendChild(number);
-                const colors = ['#00ffff', '#ff6ec7', '#f9f871', '#ff8c00', '#32cd32'];
-                number.style.color = colors[Math.floor(Math.random() * colors.length)];
-                number.style.transform = `translateY(${Math.random() * 100 - 50}vh)`;
-                number.style.opacity = Math.random() * 0.5 + 0.5;
+        // Global state
+        let particleField = null;
+        let typingAnimation = null;
+        let isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let introComplete = false;
+        
+        // Initialize particle field
+        function initParticleField() {
+            if (isReduced) return;
+            
+            const canvas = document.getElementById('heroCanvas');
+            if (!canvas || particleField) return;
+            
+            particleField = new CanvasParticleField(canvas, {
+                colors: ['#7AA2FF', '#E6E8EC']
+            });
+            
+            // Listen for Enter prompt
+            canvas.addEventListener('particles:show-enter-prompt', () => {
+                showEnterPrompt();
+            });
+            
+            // Listen for Enter key press
+            canvas.addEventListener('particles:enter-pressed', () => {
+                hideEnterPrompt();
+                setTimeout(() => {
+                    startIntroTyping();
+                }, 1000); // 1s delay after Enter
+            });
+        }
+        
+        // Show Enter prompt
+        function showEnterPrompt() {
+            const enterPrompt = document.getElementById('enterPrompt');
+            if (enterPrompt) {
+                enterPrompt.classList.add('visible');
             }
         }
-
-        // Show continue prompt after 2 seconds
-        function showContinuePrompt() {
-            setTimeout(() => {
-                document.getElementById('continuePrompt').style.display = 'block';
-                showContinue = true;
-
-                // Animate numbers to center and fade out
-                const numbers = document.querySelectorAll('.flying-number');
-                numbers.forEach((number, index) => {
-                    setTimeout(() => {
-                        number.style.transition = 'all 3s ease-out';
-                        number.style.transform = `translate(${window.innerWidth / 2 - 50}px, ${window.innerHeight / 2 - 20}px) scale(0)`;
-                        number.style.opacity = '0';
-                    }, index * 50);
+        
+        // Hide Enter prompt
+        function hideEnterPrompt() {
+            const enterPrompt = document.getElementById('enterPrompt');
+            if (enterPrompt) {
+                enterPrompt.classList.remove('visible');
+            }
+        }
+        
+        // Start intro typing sequence
+        function startIntroTyping() {
+            const introTyping = document.getElementById('introTyping');
+            const introEnterPrompt = document.getElementById('introEnterPrompt');
+            
+            // Hide the enter prompt when typing starts and show text box
+            if (introEnterPrompt) {
+                introEnterPrompt.classList.add('hidden');
+            }
+            
+            
+            if (isReduced) {
+                // Skip to end for reduced motion
+                completeIntro();
+                return;
+            }
+            
+            // Phase 1: Type "Hello, I'm Jeremy..."
+            let currentText = "";
+            const phase1Text = "Hello, I'm Jeremy...";
+            let charIndex = 0;
+            
+            const typePhase1 = () => {
+                if (charIndex < phase1Text.length) {
+                    // Show text box instantly when first character is about to be typed
+                    if (charIndex === 0) {
+                        introTyping.classList.add('typing');
+                    }
+                    currentText += phase1Text[charIndex];
+                    introTyping.textContent = currentText + '|';
+                    charIndex++;
+                    setTimeout(typePhase1, 40 + Math.random() * 20); // 40-60ms per char
+                } else {
+                    // Remove cursor and start backspace after brief pause
+                    introTyping.textContent = currentText;
+                    setTimeout(startBackspace, 800);
+                }
+            };
+            
+            const startBackspace = () => {
+                const backspace = () => {
+                    if (currentText.length > 0) {
+                        currentText = currentText.slice(0, -1);
+                        introTyping.textContent = currentText + '|';
+                        setTimeout(backspace, 25); // Faster backspace
+                    } else {
+                        // Start phase 2
+                        setTimeout(typePhase2, 200);
+                    }
+                };
+                backspace();
+            };
+            
+            const typePhase2 = () => {
+                const phase2Text = "Welcome to my Website:)";
+                charIndex = 0;
+                
+                const typeChar = () => {
+                    if (charIndex < phase2Text.length) {
+                        currentText += phase2Text[charIndex];
+                        introTyping.textContent = currentText + '|';
+                        charIndex++;
+                        setTimeout(typeChar, 40 + Math.random() * 20);
+                    } else {
+                        // Remove cursor and complete intro
+                        introTyping.textContent = currentText;
+                        setTimeout(completeIntro, 800);
+                    }
+                };
+                typeChar();
+            };
+            
+            typePhase1();
+        }
+        
+        // Complete intro and show main site
+        function completeIntro(skipAnimations = false) {
+            introComplete = true;
+            const introOverlay = document.getElementById('introOverlay');
+            const heroTyping = document.getElementById('heroTyping');
+            
+            introOverlay.classList.add('hidden');
+            
+            // Set final text in hero
+            heroTyping.textContent = "A.I & Data Enthusiast ";
+            
+            // Ensure particles continue running in background
+            if (particleField && particleField.state !== 'complete') {
+                particleField.state = 'complete';
+                // Reset particle opacity to keep them visible but subtle
+                particleField.particles.forEach(particle => {
+                    particle.opacity = particleField.config.opacity.final;
+                    particle.isOrganizing = false;
+                    particle.targetX = null;
+                    particle.targetY = null;
                 });
-            }, 2000);
-        }
-
-        // Handle continue to typing screen
-        function continueToTyping() {
-            if (currentScreen === 'intro' && showContinue) {
-                document.getElementById('introScreen').classList.add('hidden');
-                document.getElementById('typingScreen').classList.remove('hidden');
-                currentScreen = 'typing';
-                startTypingAnimation();
+            }
+            
+            // Show main content immediately if skipping animations
+            if (skipAnimations) {
+                // Force scroll to top multiple times to ensure it works
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                showMainContent(true);
+                // Scroll to top again after showing content
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                }, 0);
+            } else {
+                // Show main content with delay
+                setTimeout(() => {
+                    showMainContent();
+                }, 800);
             }
         }
-
-        // Typing animation
-        function startTypingAnimation() {
-            const typedTextElement = document.getElementById('typedText');
-            let phase = 1;
-            let i = 0;
-            let pause = false;
-
-            const messages = ["Hello I'm Jeremy...", "Welcome to my Website :)"];
-            const typingSpeed = 50;
-            const backspaceSpeed = 30;
-            const pauseDuration = 1000;
-
-            function typeText() {
-                const interval = setInterval(() => {
-                    if (phase === 1) {
-                        if (i < messages[0].length) {
-                            typedTextElement.textContent = messages[0].slice(0, i + 1);
-                            i++;
-                        } else {
-                            clearInterval(interval);
-                            setTimeout(() => pause = true, 0);
-                            setTimeout(() => {
-                                pause = false;
-                                phase = 2;
-                                i = messages[0].length - 1;
-                                backspaceText();
-                            }, pauseDuration);
-                        }
-                    }
-                }, typingSpeed);
+        
+        // Show main content
+        function showMainContent(immediate = false) {
+            const heroContent = document.getElementById('heroContent');
+            const heroActions = document.getElementById('heroActions');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (immediate) {
+                // Show everything immediately without transitions
+                heroContent.classList.add('immediate', 'visible');
+                heroActions.classList.add('immediate', 'visible');
+                mainContent.classList.add('immediate', 'fade-in');
+            } else {
+                // Show hero content
+                heroContent.classList.add('visible');
+                
+                setTimeout(() => {
+                    heroActions.classList.add('visible');
+                }, 300);
+                
+                // Show main content after delay
+                setTimeout(() => {
+                    mainContent.classList.add('fade-in');
+                }, 800);
             }
-
-            function backspaceText() {
-                const interval = setInterval(() => {
-                    if (phase === 2) {
-                        if (i >= 0) {
-                            typedTextElement.textContent = messages[0].slice(0, i);
-                            i--;
-                        } else {
-                            clearInterval(interval);
-                            phase = 3;
-                            i = 0;
-                            typeWelcome();
-                        }
-                    }
-                }, backspaceSpeed);
-            }
-
-            function typeWelcome() {
-                const interval = setInterval(() => {
-                    if (phase === 3) {
-                        if (i < messages[1].length) {
-                            typedTextElement.textContent = messages[1].slice(0, i + 1);
-                            i++;
-                        } else {
-                            clearInterval(interval);
-                            setTimeout(() => {
-                                document.getElementById('typingScreen').classList.add('fade-out');
-                                setTimeout(() => {
-                                    document.getElementById('typingScreen').classList.add('hidden');
-                                    document.getElementById('mainContent').classList.add('fade-in');
-                                    document.querySelector('.content-container').classList.add('fade-in');
-                                }, 600);
-                            }, 500);
-                        }
-                    }
-                }, typingSpeed);
-            }
-
-            typeText();
         }
-
-        // Switch content sections with smooth transition
+        
+        // Content switching functionality (preserved)
         function switchContent(type) {
             const section = document.getElementById('content-section');
             const tabContent = section.querySelector('.tab-content');
@@ -654,59 +791,106 @@
             if (type === 'about') {
                 tabContent.innerHTML = `
                     <div class="letter-content">
-                        <p class="salutation">Dear Friend,</p>
-                        <p>I’m Jeremy Barry, hailing from the charming town of Newburyport, Massachusetts. I’m currently immersed in my studies at the College of William & Mary, pursuing Data Science and Mathematics, with a touch of Finance on the side. Numbers are my passion—whether I’m crafting insightful dashboards or untangling the chaos of a spreadsheet, I find joy in transforming data into meaningful stories.</p>
-                        <p>This summer, I’m savoring the best of both worlds: shucking fresh oysters back home and diving into the entrepreneurial spirit of the San Francisco Bay Area with a startup venture.</p>
-                        <p class="closing">If these words resonate with you, I’d be delighted to connect. Drop me a line, and let’s start a conversation!</p>
-                        <p class="closing">Warm regards,</p>
+                        <p class="salutation">Hello!</p>
+                        <p>I'm Jeremy Barry, from Newburyport, Massachusetts. I'm currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side.</p>
+                        <p>I absolutely love data. From exploring patterns to breaking down complex problems, I genuinely enjoy the process of making sense of complex information and turning it into meaningful stories.</p>
+                        <p>This summer, I'm splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
+                        <p class="closing">If anything I said resonates with you, I'd love to connect. Drop me a line, and let's start a conversation!</p>
+                        <p class="closing">Best regards,</p>
                         <p class="signature">Jeremy Barry</p>
                     </div>
                 `;
             } else if (type === 'skills') {
                 tabContent.innerHTML = `
-                    <h2>Skills</h2>
-                    <ul>
-                        <li>Data Analysis: Excel, R, Python (Pandas, NumPy), Amazon Web Services</li>
-                        <li>Data Visualization: Matplotlib, Seaborn, Power BI, Amazon Web Services</li>
-                        <li>Programming: Python, SQL, HTML</li>
-                        <li>Soft Skills: Leadership, Communication, Creativity, Adaptability</li>
-                        <li>Random: Eating Pizza, Attempting 5Ks</li>
-                    </ul>
+                    <div class="letter-content">
+                        <p class="salutation">My Skills</p>
+                        <p><strong>Data Analysis:</strong> Excel, R, Python (Pandas, NumPy), Amazon Web Services</p>
+                        <p><strong>Data Visualization:</strong> Matplotlib, Seaborn, Power BI, Amazon Web Services</p>
+                        <p><strong>Programming:</strong> Python, SQL, HTML</p>
+                        <p><strong>Soft Skills:</strong> Leadership, Communication, Creativity, Adaptability</p>
+                        <p><strong>Random:</strong> Eating Pizza, Attempting 5Ks</p>
+                    </div>
                 `;
             }
         }
-
-        // Initialize animation
-        window.addEventListener('load', () => {
-            createFlyingNumbers();
-            showContinuePrompt();
-
-         const isDirectToAbout = window.location.hash === "#about";
-
-    if (isDirectToAbout) {
-        // Skip intro animations
-        document.getElementById('introScreen').classList.add('hidden');
-        document.getElementById('typingScreen').classList.add('hidden');
-        document.getElementById('mainContent').classList.add('fade-in');
-        document.querySelector('.content-container').classList.add('fade-in');
-    } else {
-        // Normal flow with animation
-        createFlyingNumbers();
-        showContinuePrompt();
-    }
-});
-
-        // Event listeners for navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                continueToTyping();
+        
+        // Smooth scrolling for anchor links
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Global keyboard handler
+        function handleGlobalKeyPress(e) {
+            if (e.key === 'Enter' && !introComplete) {
+                const introEnterPrompt = document.getElementById('introEnterPrompt');
+                const enterPrompt = document.getElementById('enterPrompt');
+                
+                // Check if we're in the initial intro screen
+                if (introEnterPrompt && !introEnterPrompt.classList.contains('hidden')) {
+                    startIntroTyping();
+                }
+                // Check if we're in the particle enter prompt phase
+                else if (enterPrompt && enterPrompt.classList.contains('visible')) {
+                    hideEnterPrompt();
+                    setTimeout(() => {
+                        startIntroTyping();
+                    }, 1000);
+                }
             }
-        });document.getElementById('mainContent').classList.add('fade-in');
-
-
-        document.addEventListener('click', () => {
-            continueToTyping();
+        }
+        
+        // Initialize everything
+        function init() {
+            initSmoothScroll();
+            
+            // Add global keyboard listener
+            document.addEventListener('keydown', handleGlobalKeyPress);
+            
+            // Always initialize particle field immediately
+            initParticleField();
+            
+            // Check if coming directly to #about
+            const isDirectToAbout = window.location.hash === '#about';
+            
+            if (isDirectToAbout) {
+                // Immediately scroll to top before anything else
+                window.scrollTo(0, 0);
+                // Skip intro entirely and animations
+                completeIntro(true);
+            }
+        }
+        
+        // Start when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+        // Handle page visibility for performance
+        document.addEventListener('visibilitychange', () => {
+            if (particleField) {
+                if (document.hidden) {
+                    particleField.stop();
+                } else {
+                    particleField.animate();
+                }
+            }
         });
     </script>
+    
+    <!-- Screen reader announcements -->
+    <div id="announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
