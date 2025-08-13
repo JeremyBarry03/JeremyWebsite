@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeremy's Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animation.css">
     <style>
         * {
             box-sizing: border-box;
@@ -12,16 +18,14 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: url("IMG_5704.JPEG") no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
             opacity: 0;
-            transition: opacity 0.3s ease-in;
+            transition: opacity var(--dur-base) var(--ease);
         }
 
         body.fade-in {
@@ -69,13 +73,12 @@
 
 
         .content-container {
-            background: rgba(255, 245, 230, 0.95);
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4xl);
             width: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 1px solid #d4a373;
-            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: var(--space-3xl);
         }
 
         h1 {
@@ -91,31 +94,32 @@
         }
 
         .project-card {
-            background: rgba(255, 245, 230, 0.95);
-            border: 1px solid #d4a373;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3xl);
             text-align: center;
-            transition: transform 0.2s;
+            transition: all var(--dur-base) var(--ease);
         }
 
         .project-card:hover {
-            transform: scale(1.03);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
 
         .project-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #4CAF50;
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-lg);
+            color: var(--brand);
         }
 
         .project-description {
-            font-family: 'Georgia', serif;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #2c2c2c;
-            margin-bottom: 20px;
+            font-family: var(--font-serif);
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
         }
 
         iframe {
@@ -209,6 +213,7 @@
     </style>
 </head>
 <body>
+    
     <div class="main-content" id="mainContent">
         <div class="content-container">
             <div class="header-bar">
@@ -279,12 +284,12 @@
         }
 
         window.addEventListener('load', () => {
-    document.body.classList.add('fade-in');
-    document.getElementById('mainContent').classList.add('fade-in');
-    setTimeout(() => {
-        window.scrollTo(0, 0);
-    }, 100); // slight delay gives the iframe time to settle
-});
+            document.body.classList.add('fade-in');
+            document.getElementById('mainContent').classList.add('fade-in');
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100); // slight delay gives the iframe time to settle
+        });
 
         
     </script>
