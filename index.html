@@ -451,6 +451,12 @@
             box-shadow: var(--shadow-hover);
         }
         
+        .toggle-buttons button.active {
+            background-color: var(--brand-dark);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+        
         .toggle-buttons button:focus-visible {
             outline: 2px solid var(--brand);
             outline-offset: 2px;
@@ -630,8 +636,6 @@
                 <div class="group-tabs">
                     <button onclick="switchContent('about')">About Me</button>
                     <button onclick="switchContent('skills')">Skills</button>
-                    <button onclick="window.location.href='Jeremy_Barry_Resume.pdf'">Resume</button>
-                    <button onclick="window.location.href='Jeremy_Barry_Projects.html'">Projects</button>
                 </div>
             </div>
         </div>
@@ -854,6 +858,16 @@
         function switchContent(type) {
             const section = document.getElementById('content-section');
             const tabContent = section.querySelector('.tab-content');
+            
+            // Update active button state
+            const buttons = document.querySelectorAll('.toggle-buttons button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                if ((type === 'about' && button.textContent === 'About Me') ||
+                    (type === 'skills' && button.textContent === 'Skills')) {
+                    button.classList.add('active');
+                }
+            });
 
             if (type === 'about') {
                 tabContent.innerHTML = `
@@ -938,6 +952,12 @@
             
             // Always initialize particle field immediately
             initParticleField();
+            
+            // Set initial active state for About Me button
+            const aboutButton = document.querySelector('.toggle-buttons button[onclick*="about"]');
+            if (aboutButton) {
+                aboutButton.classList.add('active');
+            }
             
             // Check if coming directly to #about
             const isDirectToAbout = window.location.hash === '#about';
