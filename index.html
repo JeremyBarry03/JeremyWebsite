@@ -573,6 +573,49 @@
             margin-bottom: var(--space-xl);
         }
 
+        .split-about {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow-base);
+        }
+
+        .split-heading {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            color: var(--brand);
+            margin-bottom: var(--space-lg);
+        }
+
+        .split-about p {
+            font-family: var(--font-serif);
+            font-size: var(--text-lg);
+            line-height: var(--leading-relaxed);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .detail-heading {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-md);
+        }
+
+        .about-stats {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .about-label {
+            display: block;
+            font-weight: var(--font-semibold);
+            color: var(--text);
+        }
+
 
         /* Import additional fonts */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
@@ -621,14 +664,21 @@
                     <div class="institution">College of William & Mary</div>
                     </div>
                 </div>
-                <div class="tab-content letter-content">
-                    <p class="salutation">Hello!</p>
-                    <p>I'm Jeremy Barry, from Newburyport, Massachusetts. I'm currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side.</p>
-                    <p>I absolutely love data. From exploring patterns to breaking down complex problems, I genuinely enjoy the process of making sense of complex information and turning it into meaningful stories.</p>
-                    <p>This summer, I'm splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
-                    <p class="closing">If anything I said resonates with you, I'd love to connect. Drop me a line, and let's start a conversation!</p>
-                    <p class="closing">Best regards,</p>
-                    <p class="signature">Jeremy Barry</p>
+                <div class="tab-content">
+                    <div class="split-about">
+                            <h3 class="split-heading">About Me</h3>
+                            <p>Hello! I'm Jeremy Barry from Newburyport, Massachusetts. I study Data Science, Finance, and Mathematics at William &amp; Mary and am strongly interested in Machine Learning &amp; Product Strategy:</p>
+                            <p>Right now, two of my friends and I are building a mobile app in the same orbit as Strava or AllTrails &mdash; but for city exploration and going out. I'm super excited to share more about it soon.</p>
+                            <div class="detail-block">
+                                <h4 class="detail-heading">Experience</h4>
+                                <ul class="about-stats">
+                                    <li><span class="about-label">Co-Founder @ Crawllr:</span> Designing a social city exploration app from the ground up.</li>
+                                    <li><span class="about-label">AI Research &amp; Product Strategy @ Oaklet:</span> Translating user feedback into deployable ML features.</li>
+                                    <li><span class="about-label">Data Strategy Intern @ Eastern State Hospital:</span> Building analytics that surface patient-care insights.</li>
+                                    <li><span class="about-label">Data Analytics Intern @ C-10 Research &amp; Education Foundation:</span> Analyzed radiation monitoring data to speed regulatory reporting.</li>
+                                </ul>
+                            </div>
+                    </div>
                 </div>
             </div>
 
@@ -871,24 +921,30 @@
 
             if (type === 'about') {
                 tabContent.innerHTML = `
-                    <div class="letter-content">
-                        <p class="salutation">Hello!</p>
-                        <p>I'm Jeremy Barry, from Newburyport, Massachusetts. I'm currently a sophomore at William & Mary, studying Data Science and Mathematics, with a Finance minor on the side.</p>
-                        <p>I absolutely love data. From exploring patterns to breaking down complex problems, I genuinely enjoy the process of making sense of complex information and turning it into meaningful stories.</p>
-                        <p>This summer, I'm splitting my time between two worlds, I'll be shucking oysters back home for some time and then i'll be going to the San Francisco Bay Area to work on a startup.</p>
-                        <p class="closing">If anything I said resonates with you, I'd love to connect. Drop me a line, and let's start a conversation!</p>
-                        <p class="closing">Best regards,</p>
-                        <p class="signature">Jeremy Barry</p>
+                    <div class="split-about">
+                        <h3 class="split-heading">About Me</h3>
+                        <p>Hello! I'm Jeremy Barry from Newburyport, Massachusetts. I study Data Science, Finance, and Mathematics at William &amp; Mary and am strongly interested in Machine Learning &amp; Product Strategy:</p>
+                        <p>Right now, two of my friends and I are building a mobile app in the same orbit as Strava or AllTrails &mdash; but for city exploration and going out. I'm super excited to share more about it soon.</p>
+                        <div class="detail-block">
+                            <h4 class="detail-heading">Experience</h4>
+                            <ul class="about-stats">
+                                <li><span class="about-label">Co-Founder @ Crawllr:</span> Designing a social city exploration app from the ground up.</li>
+                                <li><span class="about-label">AI Research &amp; Product Strategy @ Oaklet:</span> Translating user feedback into deployable ML features.</li>
+                                <li><span class="about-label">Data Strategy Intern @ Eastern State Hospital:</span> Building analytics that surface patient-care insights.</li>
+                                <li><span class="about-label">Data Analytics Intern @ C-10 Research &amp; Education Foundation:</span> Analyzed radiation monitoring data to speed regulatory reporting.</li>
+                            </ul>
+                        </div>
                     </div>
                 `;
             } else if (type === 'skills') {
                 tabContent.innerHTML = `
                     <div class="letter-content">
-                        <p class="salutation">My Skills</p>
-                        <p><strong>Data Analysis:</strong> Excel, R, Python (Pandas, NumPy), Amazon Web Services</p>
-                        <p><strong>Data Visualization:</strong> Matplotlib, Seaborn, Power BI, Amazon Web Services</p>
+                        <p class="salutation">Skills</p>
+                        <p><strong>Data Analysis:</strong> Excel, SQL, R, Python (Pandas, NumPy)</p>
+                        <p><strong>Data Visualization:</strong> Matplotlib, Seaborn, Power BI</p>
                         <p><strong>Programming:</strong> Python, SQL, HTML</p>
-                        <p><strong>Soft Skills:</strong> Leadership, Communication, Creativity, Adaptability</p>
+                        <p><strong>Cloud Platforms:</strong> Amazon Web Services, Google Cloud, Microsoft Azure</p>
+                        <p><strong>Soft Skills:</strong> Leadership, Communication, Creativity, High-Agency</p>
                         <p><strong>Random:</strong> Eating Pizza, Attempting 5Ks</p>
                     </div>
                 `;
