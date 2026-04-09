@@ -60,9 +60,9 @@
   /* Show static gradient background instead of particles */
   .hero__canvas {
     background: linear-gradient(135deg, 
-      rgba(var(--brand), 0.1) 0%, 
-      rgba(var(--brand-2), 0.05) 50%, 
-      rgba(var(--brand), 0.1) 100%);
+      rgb(var(--brand-rgb) / 0.14) 0%, 
+      rgb(var(--brand-2-rgb) / 0.08) 50%, 
+      rgb(var(--brand-rgb) / 0.14) 100%);
   }
 }
 
@@ -192,7 +192,7 @@
 .focus-ring:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(var(--brand), 0.1);
+  box-shadow: 0 0 0 4px rgb(var(--brand-rgb) / 0.12);
 }
 
 /* Loading States */
@@ -210,7 +210,7 @@
   height: 100%;
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(var(--text), 0.1), 
+    rgb(var(--text-rgb) / 0.08), 
     transparent
   );
   animation: loading-shimmer 1.5s infinite;

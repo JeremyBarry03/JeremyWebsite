@@ -17,33 +17,43 @@
 }
 
 :root {
-  /* Colors - Dark Theme Only */
-  --bg: #0B0C10;
-  --surface: #111318;
-  --text: #E6E8EC;
-  --muted: #AAB1C2;
-  --brand: #7AA2FF;
+  /* Colors */
+  --bg: #0d1117;
+  --bg-rgb: 13 17 23;
+  --surface: #141a24;
+  --surface-rgb: 20 26 36;
+  --text: #f3f5f8;
+  --text-rgb: 243 245 248;
+  --muted: #a8b3c3;
+  --brand: #8ea8ff;
+  --brand-rgb: 142 168 255;
   
   /* Surface variations */
-  --surface-elevated: #1A1D24;
-  --surface-hover: #1F222A;
+  --surface-elevated: #1b2330;
+  --surface-elevated-rgb: 27 35 48;
+  --surface-hover: #222c3b;
+  --surface-strong: #101723;
+  --surface-soft: rgb(20 26 36 / 0.74);
   
   /* Text variations */
-  --text-secondary: #B8BFC8;
-  --text-tertiary: #8B9299;
+  --text-secondary: #c0c8d4;
+  --text-tertiary: #8791a0;
   
   /* Brand variations */
-  --brand-light: #92B4FF;
-  --brand-dark: #5A89FF;
+  --brand-light: #bcccff;
+  --brand-dark: #6f8ef2;
+  --brand-2: #9bc9bf;
+  --brand-2-rgb: 155 201 191;
   
   /* Semantic colors */
   --success: #10B981;
   --warning: #F59E0B;
   --error: #EF4444;
   
-  /* Border colors - simplified to hairlines */
-  --border: rgba(230, 232, 236, 0.1);
-  --border-hover: rgba(230, 232, 236, 0.15);
+  /* Border colors */
+  --border: rgb(255 255 255 / 0.09);
+  --border-strong: rgb(255 255 255 / 0.14);
+  --border-hover: rgb(142 168 255 / 0.22);
   --border-focus: var(--brand);
 }
 
@@ -113,19 +123,22 @@
 
 /* Border Radius */
 :root {
-  --radius-sm: 4px;
-  --radius-base: 6px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+  --radius-sm: 6px;
+  --radius-base: 10px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-2xl: 40px;
   --radius-full: 9999px;
 }
 
-/* Shadows - Simplified */
+/* Shadows */
 :root {
-  --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.05);
-  --shadow-hover: 0 2px 8px 0 rgb(0 0 0 / 0.1);
+  --shadow-subtle: 0 10px 30px rgb(0 0 0 / 0.16);
+  --shadow-base: 0 18px 48px rgb(0 0 0 / 0.2);
+  --shadow-hover: 0 24px 64px rgb(0 0 0 / 0.26);
+  --shadow-lg: 0 30px 80px rgb(0 0 0 / 0.28);
+  --shadow-brand-lg: 0 18px 50px rgb(var(--brand-rgb) / 0.18);
 }
 
 /* Motion */

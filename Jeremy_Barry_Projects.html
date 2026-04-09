@@ -24,6 +24,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            padding: var(--space-lg);
             opacity: 0;
             transition: opacity var(--dur-base) var(--ease);
         }
@@ -34,103 +35,93 @@
 
         .main-content {
             width: 100%;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 1080px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .header-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding: 0 10px;
-    flex-wrap: wrap;
-}
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2xl);
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+        }
 
-.header-bar h1 {
-    font-size: 2rem;
-    color: #7AA2FF;
-    margin: 0;
-    font-family: var(--font-display);
-}
-
-@media (max-width: 600px) {
-    .header-bar {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .header-bar h1 {
-        text-align: center;
-    }
-
-    .back-home-button {
-        align-self: center;
-    }
-}
+        .header-bar h1 {
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-family: var(--font-display);
+            letter-spacing: -0.04em;
+        }
 
 
         .content-container {
-            background: var(--surface);
+            background:
+                linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 22%),
+                rgb(var(--surface-rgb) / 0.82);
             border-radius: var(--radius-lg);
             padding: var(--space-4xl);
             width: 100%;
             border: 1px solid var(--border);
             margin-bottom: var(--space-3xl);
+            box-shadow: var(--shadow-base);
+            backdrop-filter: blur(18px);
         }
-
-h1 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #7AA2FF;
-    font-family: var(--font-display);
-}
 
         .projects-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: var(--space-2xl);
         }
 
         .project-card {
-            background: var(--surface);
+            background:
+                linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 22%),
+                var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: var(--space-3xl);
-            text-align: center;
+            text-align: left;
+            box-shadow: var(--shadow-subtle);
             transition: all var(--dur-base) var(--ease);
         }
 
         .project-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
+            border-color: var(--border-hover);
         }
 
-.project-title {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-semibold);
-    margin-bottom: var(--space-lg);
-    color: var(--brand);
-    font-family: var(--font-display);
-}
+        .project-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-md);
+            color: var(--text);
+            font-family: var(--font-display);
+            letter-spacing: -0.03em;
+        }
 
         .project-description {
             font-family: var(--font-serif);
-            font-size: var(--text-lg);
+            font-size: var(--text-base);
             line-height: var(--leading-relaxed);
             color: var(--text-secondary);
             margin-bottom: var(--space-lg);
+            max-width: 68ch;
         }
 
         iframe {
             width: 100%;
             height: 600px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
             background: #fff;
             overflow: hidden;
             display: block;
@@ -148,38 +139,48 @@ h1 {
             width: 90%;
             max-width: 350px;
             margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
         }
 
         .view-pdf-button,
         .back-home-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.9rem;
             margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #7AA2FF;
-            color: white;
+            padding: 0 var(--space-xl);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            background-color: var(--brand);
+            color: #0c1220;
             text-decoration: none;
-            border: none;
-            border-radius: 8px;
+            border: 1px solid var(--brand);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-subtle);
             cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
+            transition: all var(--dur-base) var(--ease);
         }
 
         .view-pdf-button:hover,
         .back-home-button:hover {
-            background-color: #5A89FF;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: var(--brand-dark);
+            border-color: var(--brand-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-brand-lg);
         }
 
         footer {
             width: 100%;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 1rem 0;
+            background: rgb(var(--surface-rgb) / 0.82);
+            color: var(--text);
+            padding: var(--space-xl) var(--space-2xl);
             margin-top: auto;
+            border-top: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
+            backdrop-filter: blur(16px);
         }
 
         footer p {
@@ -187,37 +188,74 @@ h1 {
         }
 
         footer a {
-            color: #7AA2FF;
+            color: var(--brand);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color var(--dur-base) var(--ease);
         }
 
         footer a:hover {
-            color: #5A89FF;
+            color: var(--brand-light);
         }
 
         .footer-icon {
-    height: 1.3rem;
-    width: auto;
-    vertical-align: middle;
-    position: relative;
-    top: 2px;
-    filter: grayscale(100%) brightness(200%);
-    transition: filter 0.3s ease;
-}
+            height: 1.35rem;
+            width: auto;
+            opacity: 0.72;
+            filter: grayscale(100%);
+            transition: opacity var(--dur-base) var(--ease), filter var(--dur-base) var(--ease);
+        }
+
+        .footer-icon:hover {
+            opacity: 1;
+            filter: none;
+        }
+
+        .clean-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-lg);
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
 
         @media (max-width: 768px) {
             .project-description {
-                font-size: 1rem;
+                font-size: var(--text-base);
             }
 
             iframe {
                 height: 400px;
             }
 
-            footer {
+            .content-container {
+                padding: var(--space-2xl);
+            }
+
+            .header-bar {
                 flex-direction: column;
-                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .back-home-button {
+                align-self: flex-start;
+            }
+
+            .clean-footer,
+            .footer-contact {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
