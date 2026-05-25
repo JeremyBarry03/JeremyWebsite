@@ -1,0 +1,113 @@
+window.particleConcept = new window.ParticleConcept(document.getElementById("particleCanvas"));
+window.introParticles = new window.ParticleConcept(document.getElementById("introParticleCanvas"), {
+  bindControls: false,
+  interactive: false,
+  setDataset: false
+});
+
+const introOverlay = document.getElementById("introOverlay");
+const introPrompt = document.getElementById("introPrompt");
+const introButton = document.getElementById("introButton");
+const introType = document.getElementById("introType");
+let introStarted = false;
+let introComplete = false;
+
+const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
+
+async function typeIntroText(text, speed = 8) {
+  introType.textContent = "";
+  for (let index = 0; index < text.length; index += 1) {
+    introType.textContent = `${text.slice(0, index + 1)}|`;
+    await wait(speed + Math.random() * 4);
+  }
+  introType.textContent = text;
+}
+
+async function eraseIntroText(speed = 5) {
+  let current = introType.textContent;
+  while (current.length > 0) {
+    current = current.slice(0, -1);
+    introType.textContent = current ? `${current}|` : "|";
+    await wait(speed);
+  }
+  introType.textContent = "";
+}
+
+function finishIntro() {
+  introComplete = true;
+  introOverlay.classList.add("is-hidden");
+  document.body.classList.remove("intro-active");
+  introOverlay.setAttribute("aria-hidden", "true");
+  window.setTimeout(() => {
+    window.introParticles?.stop();
+    introOverlay.hidden = true;
+  }, 840);
+}
+
+async function startIntro() {
+  if (introStarted || introComplete) return;
+  introStarted = true;
+  introPrompt.classList.add("is-hidden");
+  introButton.disabled = true;
+  introType.classList.add("is-typing");
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    introType.textContent = "Welcome to my Website:)";
+    await wait(180);
+    finishIntro();
+    return;
+  }
+
+  await typeIntroText("Hello, I'm Jeremy...");
+  await wait(1080);
+  await eraseIntroText();
+  await wait(80);
+  await typeIntroText("Welcome to my Website:)");
+  await wait(780);
+  finishIntro();
+}
+
+introButton.addEventListener("click", startIntro);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || introComplete) return;
+  const target = event.target instanceof Element ? event.target : null;
+  if (target?.closest("input, textarea, select")) return;
+  event.preventDefault();
+  startIntro();
+});
+
+introButton.focus({ preventScroll: true });
+
+const observer = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    }
+  }
+}, { threshold: 0.16 });
+
+document.querySelectorAll(".reveal").forEach((node, index) => {
+  node.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+  observer.observe(node);
+});
+
+document.querySelectorAll(".project-card[data-project-href]").forEach((card) => {
+  card.addEventListener("click", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest("a, button, input, textarea, select, video, audio, iframe")) return;
+
+    const href = card.dataset.projectHref;
+    if (!href) return;
+
+    window.location.href = href;
+  });
+});
+
+if (window.location.hash) {
+  window.requestAnimationFrame(() => {
+    const target = document.getElementById(window.location.hash.slice(1));
+    target?.scrollIntoView();
+  });
+}

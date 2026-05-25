@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Bluu Next";
-  src: url("../assets/BluuNext-Bold.otf") format("opentype");
+  src: url("../assets/fonts/BluuNext-Bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "Bluu Next";
-  src: url("../assets/BluuNext-Bolditalic.otf") format("opentype");
+  src: url("../assets/fonts/BluuNext-Bolditalic.otf") format("opentype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -18,32 +18,32 @@
 
 :root {
   /* Colors */
-  --bg: #0d1117;
-  --bg-rgb: 13 17 23;
-  --surface: #141a24;
-  --surface-rgb: 20 26 36;
-  --text: #f3f5f8;
-  --text-rgb: 243 245 248;
-  --muted: #a8b3c3;
-  --brand: #8ea8ff;
-  --brand-rgb: 142 168 255;
+  --bg: #000000;
+  --bg-rgb: 0 0 0;
+  --surface: #0a0a0c;
+  --surface-rgb: 10 10 12;
+  --text: #f7f7f5;
+  --text-rgb: 247 247 245;
+  --muted: #b9b7b0;
+  --brand: #e7eaff;
+  --brand-rgb: 231 234 255;
   
   /* Surface variations */
-  --surface-elevated: #1b2330;
-  --surface-elevated-rgb: 27 35 48;
-  --surface-hover: #222c3b;
-  --surface-strong: #101723;
-  --surface-soft: rgb(20 26 36 / 0.74);
+  --surface-elevated: #101014;
+  --surface-elevated-rgb: 16 16 20;
+  --surface-hover: #15151a;
+  --surface-strong: #08080a;
+  --surface-soft: rgb(10 10 12 / 0.78);
   
   /* Text variations */
-  --text-secondary: #c0c8d4;
-  --text-tertiary: #8791a0;
+  --text-secondary: #d0cec8;
+  --text-tertiary: #85827a;
   
   /* Brand variations */
-  --brand-light: #bcccff;
-  --brand-dark: #6f8ef2;
-  --brand-2: #9bc9bf;
-  --brand-2-rgb: 155 201 191;
+  --brand-light: #ffffff;
+  --brand-dark: #cbd0ef;
+  --brand-2: #80f0d2;
+  --brand-2-rgb: 128 240 210;
   
   /* Semantic colors */
   --success: #10B981;
@@ -53,7 +53,7 @@
   /* Border colors */
   --border: rgb(255 255 255 / 0.09);
   --border-strong: rgb(255 255 255 / 0.14);
-  --border-hover: rgb(142 168 255 / 0.22);
+  --border-hover: rgb(128 240 210 / 0.24);
   --border-focus: var(--brand);
 }
 

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Claude spark logo">
+  <g fill="none" stroke="#d97757" stroke-width="13.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M61 61 44 15"/>
+    <path d="M67 60 73 16"/>
+    <path d="M72 62 96 28"/>
+    <path d="M74 66 116 64"/>
+    <path d="M72 71 106 88"/>
+    <path d="M67 75 79 116"/>
+    <path d="M61 75 47 112"/>
+    <path d="M57 72 23 94"/>
+    <path d="M56 66 14 62"/>
+    <path d="M58 61 25 31"/>
+  </g>
+  <circle cx="64" cy="67" r="8" fill="#d97757"/>
+</svg>

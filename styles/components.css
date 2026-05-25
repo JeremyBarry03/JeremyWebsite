@@ -70,7 +70,7 @@ body {
 
 .header__logo {
   font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   font-family: var(--font-display);
   color: var(--brand);
   letter-spacing: -0.03em;
@@ -184,7 +184,7 @@ body {
 
 .card__title {
   font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   font-family: var(--font-display);
   color: var(--text);
   margin-bottom: var(--space-sm);
@@ -353,7 +353,7 @@ body {
 
 .project-card__title {
   font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   font-family: var(--font-display);
   color: var(--text);
   margin-bottom: var(--space-sm);
@@ -392,7 +392,7 @@ body {
 
 .footer__section h3 {
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   font-family: var(--font-display);
   color: var(--text);
   margin-bottom: var(--space-lg);
@@ -436,7 +436,7 @@ body {
 .prose h5,
 .prose h6 {
   color: var(--text);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   font-family: var(--font-display);
   line-height: var(--leading-tight);
   margin-top: var(--space-2xl);

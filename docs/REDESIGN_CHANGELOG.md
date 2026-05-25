@@ -96,7 +96,7 @@ Complete redesign of Jeremy's personal website with modern design system, canvas
 
 ### Preserved Files
 - All images, PDFs, and project assets
-- CNAME, favicon.png
+- CNAME, images/favicon.png
 - Social media links and contact information
 
 ## ✅ Acceptance Criteria Met

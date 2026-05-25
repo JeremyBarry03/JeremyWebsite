@@ -1,0 +1,167 @@
+@media (max-width: 980px) {
+  .hero,
+  .section__head,
+  .tech-wall,
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 4rem;
+  }
+
+  .hero__copy {
+    display: block;
+    max-width: 720px;
+  }
+
+  .hero__identity {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 2rem);
+  }
+
+  .hero__portrait {
+    margin-left: auto;
+  }
+
+  .tech-wall {
+    min-height: 260px;
+    padding: 28px 20px;
+  }
+
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    top: 12px;
+    height: 46px;
+    max-width: calc(100% - 20px);
+    margin-top: 12px;
+    padding: 0 8px;
+    gap: 8px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 2px;
+    font-size: 0.76rem;
+  }
+
+  .nav a {
+    min-height: 30px;
+    padding: 0 7px;
+  }
+
+  .speed-control {
+    min-height: 30px;
+    padding: 0 8px;
+  }
+
+  .speed-control input {
+    width: 76px;
+  }
+
+  .tech-wall {
+    gap: 16px 18px;
+  }
+
+  .tech-card {
+    min-width: 58px;
+  }
+
+  .tech-card strong {
+    font-size: 0.68rem;
+  }
+
+  .hero {
+    width: min(calc(100% - 32px), 358px);
+    margin-left: 16px;
+    margin-right: auto;
+    min-height: auto;
+    padding: 4.5rem 0 2rem;
+  }
+
+  .hero__copy::before {
+    inset: -28px -18px -34px -18px;
+    background:
+      radial-gradient(ellipse at 36% 38%, rgb(0 0 0 / 0.92), rgb(0 0 0 / 0.72) 52%, rgb(0 0 0 / 0) 82%),
+      linear-gradient(90deg, rgb(0 0 0 / 0.76), rgb(0 0 0 / 0.34) 100%);
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 16vw, 4.55rem);
+  }
+
+  .hero__identity {
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero__portrait {
+    width: clamp(104px, 28vw, 132px);
+  }
+
+  .hero__summary {
+    font-size: 1.04rem;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .btn {
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 0.84rem;
+  }
+
+  .section,
+  .footer {
+    width: min(calc(100% - 32px), 358px);
+    margin-left: 16px;
+    margin-right: auto;
+  }
+
+  .project-card {
+    --panel-cut: 20px;
+    border-radius: 0;
+  }
+
+  .tech-card {
+    border-radius: 22px;
+  }
+
+  .intro-type.is-typing {
+    min-width: auto;
+    padding: 0;
+  }
+
+  .footer {
+    --footer-cut: 18px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .footer__links {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .particle-canvas {
+    opacity: 0.35;
+  }
+}

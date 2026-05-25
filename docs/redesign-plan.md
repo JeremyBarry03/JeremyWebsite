@@ -22,7 +22,7 @@
 - `lib/particles/canvasField.js` - Canvas particle system (to be created)
 
 ### Assets to Preserve
-- All existing images (`IMG_*.JPEG`, `favicon.png`, etc.)
+- All existing images (`images/profile/IMG_*.JPEG`, `images/favicon.png`, etc.)
 - All project files in `projects/` directory
 - All PDF documents
 - Social media icons

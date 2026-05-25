@@ -1,1120 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-BNZ4TFFE70');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeremy's Website</title>
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/tokens.css">
-    <link rel="stylesheet" href="styles/components.css">
-    <link rel="stylesheet" href="styles/animation.css">
-    <style>
-        /* Page-specific styles */
-        body {
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-        }
-
-        /* Hero Section */
-        .new-hero {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .hero-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 760px;
-            padding: var(--space-2xl);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.22, 0.8, 0.31, 1);
-        }
-        
-        .hero-content.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .hero-content.immediate {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-            transition: none !important;
-        }
-        
-        .hero-headline {
-            font-size: clamp(2.8rem, 6vw, 5rem);
-            font-weight: var(--font-bold);
-            font-family: var(--font-display);
-            color: var(--text);
-            margin-bottom: var(--space-lg);
-            line-height: 1.02;
-            letter-spacing: -0.05em;
-        }
-        
-        .hero-typing {
-            font-size: clamp(1.1rem, 2.8vw, 1.65rem);
-            font-weight: var(--font-medium);
-            font-family: var(--font-display);
-            color: var(--text-secondary);
-            min-height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--space-2xl);
-            letter-spacing: -0.03em;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        
-        .hero-actions {
-            display: flex;
-            gap: var(--space-md);
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.22, 0.8, 0.31, 1) 0.3s;
-        }
-        
-        .hero-actions.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .hero-actions.immediate {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-            transition: none !important;
-        }
-        
-        /* Enter Prompt Text */
-        .enter-prompt {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-tertiary);
-            font-size: var(--text-base);
-            font-weight: var(--font-medium);
-            text-align: center;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .enter-prompt.visible {
-            opacity: 0.9;
-            pointer-events: auto;
-        }
-        
-        .enter-button {
-            min-height: 2.75rem;
-            padding: 0 var(--space-xl);
-            background: rgb(var(--surface-rgb) / 0.84);
-            border: 1px solid var(--border-strong);
-            border-radius: var(--radius-full);
-            color: var(--text-secondary);
-            font-size: var(--text-sm);
-            font-weight: var(--font-medium);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(18px);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .enter-button:hover {
-            background: rgb(var(--surface-elevated-rgb) / 0.92);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-        
-        .enter-button:active {
-            transform: translateY(0);
-        }
-        
-        /* Intro Screen Overlay */
-        .intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            opacity: 1;
-            transition: opacity 0.8s ease-out;
-        }
-        
-        .intro-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .intro-typing {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: var(--font-medium);
-            color: var(--text);
-            font-family: var(--font-display);
-            min-height: 1.2em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            overflow: hidden;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: var(--radius-lg);
-            padding: 1.5rem 2.5rem;
-            transition: all 0.3s ease-in-out;
-            letter-spacing: -0.04em;
-        }
-        
-        .intro-typing.typing {
-            background: rgb(var(--surface-rgb) / 0.78);
-            backdrop-filter: blur(18px);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-base);
-            transition: none;
-        }
-        
-        .intro-enter-prompt {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: var(--font-medium);
-            color: var(--text-tertiary);
-            text-align: center;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-            animation: pulse 2s ease-in-out infinite;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .intro-enter-prompt.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .intro-enter-button {
-            min-height: 2.75rem;
-            padding: 0 var(--space-xl);
-            background: rgb(var(--surface-rgb) / 0.84);
-            border: 1px solid var(--border-strong);
-            border-radius: var(--radius-full);
-            color: var(--text-secondary);
-            font-size: var(--text-sm);
-            font-weight: var(--font-medium);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(18px);
-            box-shadow: var(--shadow-subtle);
-            animation: none;
-        }
-        
-        .intro-enter-button:hover {
-            background: rgb(var(--surface-elevated-rgb) / 0.92);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-        
-        .intro-enter-button:active {
-            transform: translateY(0);
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-
-        /* Main Content */
-        .main-content {
-            width: 100%;
-            max-width: 980px;
-            padding: var(--space-lg);
-            margin: 0 auto;
-            opacity: 0;
-            transition: opacity 0.6s ease-in;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .main-content.fade-in {
-            opacity: 1;
-        }
-        
-        .main-content.immediate {
-            opacity: 1 !important;
-            transition: none !important;
-        }
-
-        .content-container {
-            background:
-                linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 22%),
-                rgb(var(--surface-rgb) / 0.82);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4xl);
-            width: 100%;
-            margin-bottom: var(--space-3xl);
-            position: relative;
-            border: 1px solid var(--border);
-            z-index: 3;
-            box-shadow: var(--shadow-base);
-            backdrop-filter: blur(18px);
-        }
-
-        .content-section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .content-section.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .tab-content {
-            margin-top: 1rem;
-        }
-
-        .content-container h2 {
-            color: var(--brand);
-            font-size: var(--text-2xl);
-            font-weight: var(--font-semibold);
-            font-family: var(--font-display);
-            margin-bottom: var(--space-lg);
-        }
-
-        .about-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-2xl);
-        }
-
-        .about-container img {
-            width: 132px;
-            height: 132px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: var(--shadow-lg);
-            border: 3px solid rgb(var(--brand-rgb) / 0.16);
-            transition: transform var(--dur-base) var(--ease);
-        }
-        
-        .about-container img:hover {
-            transform: scale(1.05);
-        }
-
-        .professional-label {
-            font-family: var(--font-serif);
-            color: var(--text);
-            text-align: left;
-            line-height: var(--leading-snug);
-            padding: var(--space-xs) 0;
-            max-width: 560px;
-        }
-
-        .professional-label .name {
-            font-size: var(--text-3xl);
-            font-weight: var(--font-bold);
-            font-family: var(--font-display);
-            margin-bottom: var(--space-sm);
-            color: var(--text);
-            letter-spacing: -0.04em;
-        }
-
-        .professional-label .title {
-            font-size: var(--text-base);
-            color: var(--text-secondary);
-            margin-bottom: var(--space-xs);
-            font-style: italic;
-        }
-
-        .professional-label .institution {
-            font-size: var(--text-sm);
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .letter-content {
-            display: grid;
-            gap: var(--space-md);
-        }
-
-        .skill-row {
-            display: grid;
-            grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
-            gap: var(--space-lg);
-            align-items: start;
-            padding: var(--space-md) 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .skill-row:first-child {
-            padding-top: 0;
-            border-top: none;
-        }
-
-        .skill-label {
-            color: var(--text);
-            font-size: var(--text-sm);
-            font-weight: var(--font-semibold);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .skill-value {
-            color: var(--text-secondary);
-            line-height: var(--leading-relaxed);
-            font-family: var(--font-serif);
-        }
-
-        .content-container ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .content-container ul li {
-            font-size: var(--text-base);
-            line-height: 1.75;
-            color: var(--text-secondary);
-            position: relative;
-            padding-left: 1.25rem;
-        }
-
-        .content-container ul li:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0.75rem;
-            width: 0.42rem;
-            height: 0.42rem;
-            border-radius: 50%;
-            background: var(--brand);
-        }
-
-        .toggle-buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: var(--space-xl);
-        }
-
-        .toggle-buttons .group-tabs {
-            display: flex;
-            gap: var(--space-sm);
-            padding: 0.35rem;
-            background: rgb(var(--surface-elevated-rgb) / 0.82);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-full);
-            box-shadow: var(--shadow-subtle);
-        }
-
-
-        .toggle-buttons button {
-            min-width: 128px;
-            min-height: 2.7rem;
-            padding: 0 var(--space-lg);
-            font-size: var(--text-sm);
-            font-weight: var(--font-medium);
-            background-color: transparent;
-            color: var(--text-secondary);
-            border: 1px solid transparent;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-            transition: all var(--dur-base) var(--ease);
-            text-align: center;
-        }
-
-        .toggle-buttons button:hover {
-            color: var(--text);
-            background: rgb(255 255 255 / 0.04);
-        }
-        
-        .toggle-buttons button.active {
-            background-color: var(--brand);
-            color: #0c1220;
-            border-color: var(--brand);
-            box-shadow: var(--shadow-brand-lg);
-        }
-        
-        .toggle-buttons button:focus-visible {
-            outline: 2px solid var(--brand);
-            outline-offset: 2px;
-        }
-
-        /* Footer */
-        footer {
-            width: 100%;
-            background: rgb(var(--surface-rgb) / 0.82);
-            color: var(--text);
-            padding: var(--space-xl) var(--space-2xl);
-            margin-top: auto;
-            border-top: 1px solid var(--border);
-            position: relative;
-            z-index: 3;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-subtle);
-            backdrop-filter: blur(16px);
-        }
-
-        footer p, footer div {
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        footer a {
-            color: var(--brand);
-            text-decoration: none;
-            transition: color var(--dur-base) var(--ease);
-        }
-
-        footer a:hover {
-            color: var(--brand-light);
-        }
-
-        .footer-icon {
-            height: 1.35rem;
-            width: auto;
-            opacity: 0.72;
-            filter: grayscale(100%);
-            transition: opacity var(--dur-base) var(--ease), filter var(--dur-base) var(--ease);
-        }
-        
-        .footer-icon:hover {
-            opacity: 1;
-            filter: none;
-        }
-
-
-
-        /* Animations */
-        /* Custom animations for this page */
-        @keyframes heroEnter {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-content {
-                padding: var(--space-lg);
-            }
-            
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .professional-label {
-                max-width: 100%;
-            }
-            
-            .main-content {
-                padding: var(--space-md);
-            }
-        }
-        
-        .headshot-info {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2xl);
-            margin-bottom: 0;
-        }
-
-        .split-about {
-            background: rgb(var(--surface-elevated-rgb) / 0.58);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-3xl);
-            box-shadow: var(--shadow-base);
-        }
-
-        .split-heading {
-            font-size: var(--text-2xl);
-            font-weight: var(--font-semibold);
-            font-family: var(--font-display);
-            color: var(--text);
-            margin-bottom: var(--space-lg);
-            letter-spacing: -0.03em;
-        }
-
-        .split-about p {
-            font-family: var(--font-serif);
-            font-size: var(--text-base);
-            line-height: var(--leading-relaxed);
-            color: var(--text-secondary);
-            margin-bottom: var(--space-lg);
-        }
-
-        .detail-block {
-            margin-top: var(--space-2xl);
-            padding-top: var(--space-xl);
-            border-top: 1px solid var(--border);
-        }
-
-        .detail-heading {
-            font-size: var(--text-sm);
-            font-weight: var(--font-semibold);
-            font-family: var(--font-sans);
-            margin-bottom: var(--space-md);
-            color: var(--text);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .about-stats {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: var(--space-md);
-        }
-
-        .about-label {
-            display: block;
-            font-weight: var(--font-semibold);
-            color: var(--text);
-            margin-bottom: 0.1rem;
-        }
-
-        .clean-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--space-lg);
-        }
-
-        .footer-contact {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-sm);
-            align-items: center;
-        }
-
-        .footer-social {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-        }
-
-        @media (max-width: 640px) {
-            .headshot-info,
-            .clean-footer,
-            .toggle-buttons .group-tabs,
-            .footer-contact {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .toggle-buttons,
-            .toggle-buttons .group-tabs {
-                width: 100%;
-            }
-
-            .toggle-buttons button {
-                width: 100%;
-            }
-
-            .skill-row {
-                grid-template-columns: 1fr;
-                gap: var(--space-sm);
-            }
-        }
-    </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNZ4TFFE70"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-BNZ4TFFE70");
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jeremy Barry's portfolio for machine learning, data science, entrepreneurship, and analytics projects.">
+  <title>Jeremy Barry</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css?v=20260524-23">
 </head>
-<body>
-    
-    <!-- Hero Section with Canvas -->
-    <section class="new-hero" id="hero">
-        <canvas class="hero-canvas" id="heroCanvas"></canvas>
-        <div class="hero-content" id="heroContent">
-            <h1 class="hero-headline">Jeremy Barry</h1>
-            <div class="hero-typing" id="heroTyping"></div>
-            <div class="hero-actions" id="heroActions">
-                <a href="#about" class="btn btn--primary">About Me</a>
-                <a href="Jeremy_Barry_Projects.html" class="btn btn--secondary">Projects</a>
-                <a href="Jeremy_Barry_Resume.pdf" class="btn btn--subtle" target="_blank">Resume</a>
-            </div>
-        </div>
-        
-        <!-- Enter Prompt Text -->
-        <div class="enter-prompt" id="enterPrompt">
-            <span>Press Enter to continue</span>
-            <button class="enter-button" onclick="handleEnterButton('particle')">Enter</button>
-        </div>
-    </section>
-    
-    <!-- Intro Screen -->
-    <div class="intro-overlay" id="introOverlay">
-        <div class="intro-typing" id="introTyping"></div>
-        <div class="intro-enter-prompt" id="introEnterPrompt">
-            <span>Press Enter to Continue</span>
-            <button class="intro-enter-button" onclick="handleEnterButton('intro')">Enter</button>
-        </div>
+<body class="intro-active">
+  <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+  <div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-label="Website introduction">
+    <canvas id="introParticleCanvas" class="intro-particle-canvas" aria-hidden="true"></canvas>
+    <div class="intro-card">
+      <div class="intro-type" id="introType" aria-live="polite"></div>
+      <div class="intro-prompt" id="introPrompt">
+        <span>Press Enter to continue</span>
+        <button class="intro-button" id="introButton" type="button">Enter</button>
+      </div>
     </div>
-    
-    <!-- Main Website Content -->
-    <div class="main-content" id="mainContent">
-        <div class="content-container" id="about">
-            <div class="content-section about-container active" id="content-section">
-                <div class="headshot-info">
-                <img src="IMG_8497.JPEG" alt="Jeremy's professional headshot">
-                <div class="professional-label">
-                    <div class="name">Jeremy Barry</div>
-                    <div class="title">Data Science, Mathematics & Finance Student</div>
-                    <div class="institution">College of William & Mary</div>
-                    </div>
-                </div>
-                <div class="tab-content">
-                    <div class="split-about">
-                            <h3 class="split-heading">About Me</h3>
-                            <p>Hello! I'm Jeremy Barry from Newburyport, Massachusetts. I study Data Science, Finance, and Mathematics at William &amp; Mary and am strongly interested in Machine Learning &amp; Product Strategy:</p>
-                            <p>Right now, two of my friends and I are building a mobile app in the same orbit as Strava or AllTrails &mdash; but for city exploration and going out. I'm super excited to share more about it soon.</p>
-                            <div class="detail-block">
-                                <h4 class="detail-heading">Experience</h4>
-                                <ul class="about-stats">
-                                    <li><span class="about-label">Co-Founder @ Crawllr:</span> Designing a social city exploration app from the ground up.</li>
-                                    <li><span class="about-label">AI Research &amp; Product Strategy @ Oaklet:</span> Translating user feedback into deployable ML features.</li>
-                                    <li><span class="about-label">Data Strategy Intern @ Eastern State Hospital:</span> Building analytics that surface patient-care insights.</li>
-                                    <li><span class="about-label">Data Analytics Intern @ C-10 Research &amp; Education Foundation:</span> Analyzed radiation monitoring data to speed regulatory reporting.</li>
-                                </ul>
-                            </div>
-                    </div>
-                </div>
-            </div>
+  </div>
 
-            <div class="toggle-buttons">
-                <div class="group-tabs">
-                    <button onclick="switchContent('about')">About Me</button>
-                    <button onclick="switchContent('skills')">Skills</button>
-                </div>
-            </div>
+  <div class="site-shell">
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Work</a>
+      </nav>
+      <div class="topbar__controls">
+        <label class="speed-control" for="particleSpeed">
+          <input id="particleSpeed" type="range" min="0" max="2" step="0.01" value="0.2" aria-label="Particle speed">
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="about">
+        <div class="hero__copy reveal">
+          <div class="hero__identity">
+            <h1>Jeremy Barry</h1>
+            <img class="hero__portrait" src="images/profile/IMG_8497.JPEG" alt="Jeremy Barry headshot">
+          </div>
+          <p class="hero__summary">Data Science, Mathematics, Finance student at William &amp; Mary.</p>
+          <div class="hero__letter">
+            <p>Hello! I'm Jeremy Barry from Newburyport, Massachusetts. I study Data Science, Finance, and Mathematics at William &amp; Mary.</p>
+            <p>This summer, I'm joining NT Concepts as a Data Science / Machine Learning Intern. I'm especially interested in machine learning, entrepreneurship, and practical data systems.</p>
+          </div>
+          <div class="actions">
+            <a class="btn btn--primary" href="#work">View projects</a>
+            <a class="btn" href="documents/Jeremy_Barry_Resume.pdf" target="_blank" rel="noreferrer">View resume</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="section__head section__head--solo reveal">
+          <h2>Technologies I'm Familiar With:</h2>
         </div>
 
-         <footer class="clean-footer">
-    <div class="footer-contact">
-        <strong>Contact Me:</strong>
-        <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a> |
+        <div class="tech-wall reveal" aria-label="Technology logos">
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/github/f4f7fb" alt="" loading="lazy">
+            <strong>GitHub</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/devicon:microsoftsqlserver.svg" alt="" loading="lazy">
+            <strong>SQL</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/simple-icons:microsoftexcel.svg?color=%23217346" alt="" loading="lazy">
+            <strong>Excel</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/python/3776AB" alt="" loading="lazy">
+            <strong>Python</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/simple-icons:pytorch.svg?color=%23EE4C2C" alt="" loading="lazy">
+            <strong>PyTorch</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/pandas/150458" alt="" loading="lazy">
+            <strong>Pandas</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/numpy/4D77CF" alt="" loading="lazy">
+            <strong>NumPy</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/r/276DC3" alt="" loading="lazy">
+            <strong>R</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:matplotlib-icon.svg" alt="" loading="lazy">
+            <strong>Matplotlib</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:seaborn-icon.svg" alt="" loading="lazy">
+            <strong>Seaborn</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:microsoft-power-bi.svg" alt="" loading="lazy">
+            <strong>Power BI</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:tableau-icon.svg" alt="" loading="lazy">
+            <strong>Tableau</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/postgresql/4169E1" alt="" loading="lazy">
+            <strong>Postgres</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/supabase/3FCF8E" alt="" loading="lazy">
+            <strong>Supabase</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/netlify/00C7B7" alt="" loading="lazy">
+            <strong>Netlify</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/vercel/FFFFFF" alt="" loading="lazy">
+            <strong>Vercel</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/railway/FFFFFF" alt="" loading="lazy">
+            <strong>Railway</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:aws.svg" alt="" loading="lazy">
+            <strong>AWS</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/googlecloud/4285F4" alt="" loading="lazy">
+            <strong>Google Cloud</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/logos:microsoft-azure.svg" alt="" loading="lazy">
+            <strong>Azure</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/simple-icons:openai.svg?color=%23f4f7fb" alt="" loading="lazy">
+            <strong>Codex</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="images/toolkit/claude-spark.svg" alt="" loading="lazy">
+            <strong>Claude</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/react/61DAFB" alt="" loading="lazy">
+            <strong>React</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="images/toolkit/expo-go.svg" alt="" loading="lazy">
+            <strong>Expo Go</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://cdn.simpleicons.org/typescript/3178C6" alt="" loading="lazy">
+            <strong>TypeScript</strong>
+          </article>
+          <article class="tech-card">
+            <img class="tech-logo" src="https://api.iconify.design/hugeicons:capcut.svg?color=%23f4f7fb" alt="" loading="lazy">
+            <strong>CapCut</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="section__head section__head--solo reveal">
+          <h2>Projects</h2>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card project-card--app reveal" data-project-href="https://apps.apple.com/us/app/fiftyplates/id6757994848" data-project-target="_blank">
+            <a class="project-card__hit" href="https://apps.apple.com/us/app/fiftyplates/id6757994848" aria-label="Open FiftyPlates on the App Store"></a>
+            <div class="project-media project-media--app-icon" aria-hidden="true">
+              <img src="images/projects/app-icons/fiftyplates-app-icon.jpg" alt="" loading="lazy">
+            </div>
+            <h3>FiftyPlates</h3>
+            <div class="project-date">January 2026</div>
+            <p>FiftyPlates is an iOS road trip game I made in one weekend while watching the NFL playoffs. You select states when you see their license plates on a road trip, then track the drive as the map fills in.</p>
+            <div class="project-tags" aria-label="FiftyPlates technologies">
+              <span>Supabase</span>
+              <span>Expo Go</span>
+              <span>TypeScript</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="https://apps.apple.com/us/app/fiftyplates/id6757994848" target="_blank" rel="noreferrer">View on App Store</a>
+            </div>
+          </article>
+
+          <article class="project-card project-card--app reveal" data-project-href="https://apps.apple.com/us/app/crawllr/id6755016564" data-project-target="_blank">
+            <a class="project-card__hit" href="https://apps.apple.com/us/app/crawllr/id6755016564" aria-label="Open Crawllr on the App Store"></a>
+            <div class="project-media project-media--app-icon" aria-hidden="true">
+              <img src="images/projects/app-icons/crawllr-app-icon.jpg" alt="" loading="lazy">
+            </div>
+            <h3>Crawllr</h3>
+            <div class="project-date">August 2025 - March 2026</div>
+            <p>My very first venture. Crawllr is a social media app that allows people to track and share their adventures (think Strava + Instagram mainly for college students). We grew this to over 400 users before moving onto bigger and better things.</p>
+            <div class="project-tags" aria-label="Crawllr technologies">
+              <span>React</span>
+              <span>Expo Go</span>
+              <span>Google Cloud</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="https://apps.apple.com/us/app/crawllr/id6755016564" target="_blank" rel="noreferrer">View on App Store</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="media/projects/Marine_Learning_Video.mp4" data-project-target="_blank">
+            <a class="project-card__hit" href="media/projects/Marine_Learning_Video.mp4" aria-label="Open Marine Learning demo video"></a>
+            <div class="project-media">
+              <video controls="" preload="metadata" muted="" playsinline="" aria-label="Marine Learning demo video">
+                <source src="media/projects/Marine_Learning_Video.mp4" type="video/mp4">
+              </video>
+            </div>
+            <h3>Marine Learning</h3>
+            <div class="project-date">October 2025</div>
+            <p>Built a computer vision pipeline at William & Mary’s first annual hackathon to identify benthic species from seafloor footage, using YOLO for detection and DenseNet-121 for classification. Added custom random deletion augmentation and reached about 94% test accuracy, with training accuracy around 94–95%.</p>
+            <div class="project-tags" aria-label="Marine Learning technologies">
+              <span>PyTorch</span>
+              <span>Computer vision</span>
+              <span>Python</span>
+              <span>Netlify</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="media/projects/Marine_Learning_Video.mp4" target="_blank" rel="noreferrer">Watch demo</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="https://act-williammary.web.app/" data-project-target="_blank">
+            <a class="project-card__hit" href="https://act-williammary.web.app/" aria-label="Open Advanced Analytics for Mario Kart dashboard"></a>
+            <div class="project-media project-media--transparent-art" aria-hidden="true">
+              <img src="images/projects/mario-kart-luigi.png" alt="" loading="lazy">
+            </div>
+            <h3>Advanced Analytics for Mario Kart</h3>
+            <div class="project-date">September 2025</div>
+            <p>This is my first ever full-stack web app I built. I made it for fun and for my friends, using React and Firebase to track Mario Kart race results, player stats, and performance trends over time with a custom ELO rating system. You'll think it's one of the coolest things I've made if you nerd out over Mario Kart.</p>
+            <div class="project-tags" aria-label="Mario Kart analytics technologies">
+              <span>React</span>
+              <span>Firebase</span>
+              <span>Analytics</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="https://act-williammary.web.app/" target="_blank" rel="noreferrer">Open dashboard</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="https://liam-says-what-now.vercel.app/" data-project-target="_blank">
+            <a class="project-card__hit" href="https://liam-says-what-now.vercel.app/" aria-label="Open LiamBot AI Assistant"></a>
+            <div class="project-media" aria-hidden="true">
+              <img src="images/projects/liambot-photo.png" alt="" loading="lazy">
+            </div>
+            <h3>LiamBot - AI Assistant</h3>
+            <div class="project-date">December 2024</div>
+            <p>Built and deployed an AI assistant designed to respond like my little brother, originally just as a fun side project. It ended up being a great way to learn APIs, AI workflows, and full-stack development, and gave me early hands-on experience building and integrating LLM applications.</p>
+            <div class="project-tags" aria-label="LiamBot technologies">
+              <span>Vercel</span>
+              <span>APIs</span>
+              <span>Codex</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="https://liam-says-what-now.vercel.app/" target="_blank" rel="noreferrer">Open app</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="documents/projects/C10report.pdf" data-project-target="_blank">
+            <a class="project-card__hit" href="documents/projects/C10report.pdf" aria-label="Open Radiation Data Analysis report"></a>
+            <div class="project-media project-media--data" aria-hidden="true">
+              <div class="project-data">
+                <span style="height: 58%"></span>
+                <span style="height: 66%"></span>
+                <span style="height: 46%"></span>
+                <span style="height: 92%"></span>
+                <span style="height: 78%"></span>
+                <span style="height: 52%"></span>
+                <span style="height: 84%"></span>
+              </div>
+            </div>
+            <h3>Radiation Data Analysis</h3>
+            <div class="project-date">August 2023</div>
+            <p>At the C-10 Research & Education Foundation, analyzed 10,000+ radiation monitoring records across 15 datasets using advanced Excel modeling. Identified a previously unknown 314% reporting variance in data reviewed by the New Hampshire Department of Health.</p>
+            <div class="project-tags" aria-label="Radiation analysis technologies">
+              <span>Excel</span>
+              <span>Power BI</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="documents/projects/C10report.pdf" target="_blank" rel="noreferrer">Open report</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="projects/cluster/Cluster_Summary_Report.csv" data-project-target="_blank">
+            <a class="project-card__hit" href="projects/cluster/Cluster_Summary_Report.csv" download="" aria-label="Download Customer Segmentation cluster summary"></a>
+            <div class="project-media">
+              <img src="images/projects/cluster/Customer_Clusters_SeparateGraphs.png" alt="Customer segmentation cluster visualizations" loading="lazy">
+            </div>
+            <h3>Customer Segmentation Analysis</h3>
+            <div class="project-date">March 2024</div>
+            <p>Used Python and RFM modeling to segment customer behavior for a small local business, helping group customers for retention and targeting analysis. Looking back, the visualizations were pretty rough, but it’s cool seeing that I was building clustering models as a high schooler.</p>
+            <div class="project-tags" aria-label="Customer segmentation technologies">
+              <span>Python</span>
+              <span>Matplotlib</span>
+              <span>Seaborn</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="projects/cluster/Cluster_Summary_Report.csv" download="">Download CSV</a>
+              <a class="project-link" href="projects/cluster/Customer_Segmentation_Report.txt" download="">Download text report</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project-href="projects/loanCalculator/loan.py" data-project-target="_blank">
+            <a class="project-card__hit" href="projects/loanCalculator/loan.py" aria-label="Open Loan Payment Calculator code"></a>
+            <div class="project-media">
+              <img src="images/projects/loan-calculator/LoanGUI.png" alt="Loan payment calculator interface" loading="lazy">
+            </div>
+            <h3>Loan Payment Calculator</h3>
+            <div class="project-date">September 2024</div>
+            <p>Took a school project a step further by building an interactive loan repayment calculator using Pandas, Matplotlib, and Seaborn to visualize payoff timelines and long-term payment trends.</p>
+            <div class="project-tags" aria-label="Loan calculator technologies">
+              <span>Python</span>
+              <span>Pandas</span>
+              <span>Matplotlib</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link" href="projects/loanCalculator/loan.py" target="_blank" rel="noreferrer">View code</a>
+              <a class="project-link" href="images/projects/loan-calculator/LBG.png" target="_blank" rel="noreferrer">View chart</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Jeremy Barry's Personal Website</span>
+      <span class="footer__links">
+        <a href="mailto:jebarry@wm.edu">jebarry@wm.edu</a>
+        <span>|</span>
         <a href="tel:9784172728">978-417-2728</a>
-    </div>
-    <div class="footer-social">
-        <a href="https://www.instagram.com/jeremy_barry_" target="_blank" aria-label="Instagram">
-            <img src="instagram.jpg" alt="Instagram" class="footer-icon">
+        <span>|</span>
+        <a class="footer__icon-link" href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+          <img class="footer__icon" src="https://api.iconify.design/simple-icons:linkedin.svg?color=%230A66C2" alt="" loading="lazy">
         </a>
-        <a href="https://www.linkedin.com/in/jeremy-barry1/" target="_blank" aria-label="LinkedIn">
-            <img src="linkedin.jpg" alt="LinkedIn" class="footer-icon">
+        <span>|</span>
+        <a class="footer__icon-link" href="https://www.instagram.com/jeremy_barry_" target="_blank" rel="noreferrer" aria-label="Instagram">
+          <img class="footer__icon" src="https://api.iconify.design/simple-icons:instagram.svg?color=%23E4405F" alt="" loading="lazy">
         </a>
-    </div>
-</footer>
-
-    </div>
-
-    <!-- Scripts -->
-    <script src="lib/particles/canvasField.js"></script>
-    <script src="lib/typing.js"></script>
-    <script>
-        // Global state
-        let particleField = null;
-        let typingAnimation = null;
-        let isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let introComplete = false;
-        
-        // Initialize particle field
-        function initParticleField() {
-            if (isReduced) return;
-            
-            const canvas = document.getElementById('heroCanvas');
-            if (!canvas || particleField) return;
-            
-            particleField = new CanvasParticleField(canvas, {
-                colors: ['#8EA8FF', '#F3F5F8']
-            });
-            
-            // Listen for Enter prompt
-            canvas.addEventListener('particles:show-enter-prompt', () => {
-                showEnterPrompt();
-            });
-            
-            // Listen for Enter key press
-            canvas.addEventListener('particles:enter-pressed', () => {
-                hideEnterPrompt();
-                setTimeout(() => {
-                    startIntroTyping();
-                }, 1000); // 1s delay after Enter
-            });
-        }
-        
-        // Show Enter prompt
-        function showEnterPrompt() {
-            const enterPrompt = document.getElementById('enterPrompt');
-            if (enterPrompt) {
-                enterPrompt.classList.add('visible');
-            }
-        }
-        
-        // Hide Enter prompt
-        function hideEnterPrompt() {
-            const enterPrompt = document.getElementById('enterPrompt');
-            if (enterPrompt) {
-                enterPrompt.classList.remove('visible');
-            }
-        }
-        
-        // Start intro typing sequence
-        function startIntroTyping() {
-            const introTyping = document.getElementById('introTyping');
-            const introEnterPrompt = document.getElementById('introEnterPrompt');
-            
-            // Hide the enter prompt when typing starts and show text box
-            if (introEnterPrompt) {
-                introEnterPrompt.classList.add('hidden');
-            }
-            
-            
-            if (isReduced) {
-                // Skip to end for reduced motion
-                completeIntro();
-                return;
-            }
-            
-            // Phase 1: Type "Hello, I'm Jeremy..."
-            let currentText = "";
-            const phase1Text = "Hello, I'm Jeremy...";
-            let charIndex = 0;
-            
-            const typePhase1 = () => {
-                if (charIndex < phase1Text.length) {
-                    // Show text box instantly when first character is about to be typed
-                    if (charIndex === 0) {
-                        introTyping.classList.add('typing');
-                    }
-                    currentText += phase1Text[charIndex];
-                    introTyping.textContent = currentText + '|';
-                    charIndex++;
-                    setTimeout(typePhase1, 40 + Math.random() * 20); // 40-60ms per char
-                } else {
-                    // Remove cursor and start backspace after brief pause
-                    introTyping.textContent = currentText;
-                    setTimeout(startBackspace, 800);
-                }
-            };
-            
-            const startBackspace = () => {
-                const backspace = () => {
-                    if (currentText.length > 0) {
-                        currentText = currentText.slice(0, -1);
-                        introTyping.textContent = currentText + '|';
-                        setTimeout(backspace, 25); // Faster backspace
-                    } else {
-                        // Start phase 2
-                        setTimeout(typePhase2, 200);
-                    }
-                };
-                backspace();
-            };
-            
-            const typePhase2 = () => {
-                const phase2Text = "Welcome to my Website:)";
-                charIndex = 0;
-                
-                const typeChar = () => {
-                    if (charIndex < phase2Text.length) {
-                        currentText += phase2Text[charIndex];
-                        introTyping.textContent = currentText + '|';
-                        charIndex++;
-                        setTimeout(typeChar, 40 + Math.random() * 20);
-                    } else {
-                        // Remove cursor and complete intro
-                        introTyping.textContent = currentText;
-                        setTimeout(completeIntro, 800);
-                    }
-                };
-                typeChar();
-            };
-            
-            typePhase1();
-        }
-        
-        // Complete intro and show main site
-        function completeIntro(skipAnimations = false) {
-            introComplete = true;
-            const introOverlay = document.getElementById('introOverlay');
-            const heroTyping = document.getElementById('heroTyping');
-            
-            introOverlay.classList.add('hidden');
-            
-            // Set final text in hero
-            heroTyping.textContent = "A.I & Data Enthusiast ";
-            
-            // Ensure particles continue running in background
-            if (particleField && particleField.state !== 'complete') {
-                particleField.state = 'complete';
-                // Reset particle opacity to keep them visible but subtle
-                particleField.particles.forEach(particle => {
-                    particle.opacity = particleField.config.opacity.final;
-                    particle.isOrganizing = false;
-                    particle.targetX = null;
-                    particle.targetY = null;
-                });
-            }
-            
-            // Show main content immediately if skipping animations
-            if (skipAnimations) {
-                // Force scroll to top multiple times to ensure it works
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                showMainContent(true);
-                // Scroll to top again after showing content
-                setTimeout(() => {
-                    window.scrollTo(0, 0);
-                    document.documentElement.scrollTop = 0;
-                    document.body.scrollTop = 0;
-                }, 0);
-            } else {
-                // Show main content with delay
-                setTimeout(() => {
-                    showMainContent();
-                }, 800);
-            }
-        }
-        
-        // Show main content
-        function showMainContent(immediate = false) {
-            const heroContent = document.getElementById('heroContent');
-            const heroActions = document.getElementById('heroActions');
-            const mainContent = document.getElementById('mainContent');
-            
-            if (immediate) {
-                // Show everything immediately without transitions
-                heroContent.classList.add('immediate', 'visible');
-                heroActions.classList.add('immediate', 'visible');
-                mainContent.classList.add('immediate', 'fade-in');
-            } else {
-                // Show hero content
-                heroContent.classList.add('visible');
-                
-                setTimeout(() => {
-                    heroActions.classList.add('visible');
-                }, 300);
-                
-                // Show main content after delay
-                setTimeout(() => {
-                    mainContent.classList.add('fade-in');
-                }, 800);
-            }
-        }
-        
-        // Content switching functionality (preserved)
-        function switchContent(type) {
-            const section = document.getElementById('content-section');
-            const tabContent = section.querySelector('.tab-content');
-            
-            // Update active button state
-            const buttons = document.querySelectorAll('.toggle-buttons button');
-            buttons.forEach(button => {
-                button.classList.remove('active');
-                if ((type === 'about' && button.textContent === 'About Me') ||
-                    (type === 'skills' && button.textContent === 'Skills')) {
-                    button.classList.add('active');
-                }
-            });
-
-            if (type === 'about') {
-                tabContent.innerHTML = `
-                    <div class="split-about">
-                        <h3 class="split-heading">About Me</h3>
-                        <p>Hello! I'm Jeremy Barry from Newburyport, Massachusetts. I study Data Science, Finance, and Mathematics at William &amp; Mary and am strongly interested in Machine Learning &amp; Product Strategy:</p>
-                        <p>Right now, two of my friends and I are building a mobile app in the same orbit as Strava or AllTrails &mdash; but for city exploration and going out. I'm super excited to share more about it soon.</p>
-                        <div class="detail-block">
-                            <h4 class="detail-heading">Experience</h4>
-                            <ul class="about-stats">
-                                <li><span class="about-label">Co-Founder @ Crawllr:</span> Designing a social city exploration app from the ground up.</li>
-                                <li><span class="about-label">AI Research &amp; Product Strategy @ Oaklet:</span> Translating user feedback into deployable ML features.</li>
-                                <li><span class="about-label">Data Strategy Intern @ Eastern State Hospital:</span> Building analytics that surface patient-care insights.</li>
-                                <li><span class="about-label">Data Analytics Intern @ C-10 Research &amp; Education Foundation:</span> Analyzed radiation monitoring data to speed regulatory reporting.</li>
-                            </ul>
-                        </div>
-                    </div>
-                `;
-            } else if (type === 'skills') {
-                tabContent.innerHTML = `
-                    <div class="letter-content">
-                        <div class="skill-row">
-                            <span class="skill-label">Data Analysis</span>
-                            <span class="skill-value">Excel, SQL, R, Python (Pandas, NumPy)</span>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-label">Data Visualization</span>
-                            <span class="skill-value">Matplotlib, Seaborn, Power BI</span>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-label">Programming</span>
-                            <span class="skill-value">Python, SQL, HTML</span>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-label">Cloud Platforms</span>
-                            <span class="skill-value">Amazon Web Services, Google Cloud, Microsoft Azure</span>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-label">Soft Skills</span>
-                            <span class="skill-value">Leadership, Communication, Creativity, High-Agency</span>
-                        </div>
-                        <div class="skill-row">
-                            <span class="skill-label">Random</span>
-                            <span class="skill-value">Eating Pizza, Attempting 5Ks</span>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        // Smooth scrolling for anchor links
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        e.preventDefault();
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-        
-        // Handle Enter button clicks
-        function handleEnterButton(phase) {
-            if (phase === 'intro') {
-                startIntroTyping();
-            } else if (phase === 'particle') {
-                hideEnterPrompt();
-                setTimeout(() => {
-                    startIntroTyping();
-                }, 1000);
-            }
-        }
-        
-        // Global keyboard handler
-        function handleGlobalKeyPress(e) {
-            if (e.key === 'Enter' && !introComplete) {
-                const introEnterPrompt = document.getElementById('introEnterPrompt');
-                const enterPrompt = document.getElementById('enterPrompt');
-                
-                // Check if we're in the initial intro screen
-                if (introEnterPrompt && !introEnterPrompt.classList.contains('hidden')) {
-                    startIntroTyping();
-                }
-                // Check if we're in the particle enter prompt phase
-                else if (enterPrompt && enterPrompt.classList.contains('visible')) {
-                    hideEnterPrompt();
-                    setTimeout(() => {
-                        startIntroTyping();
-                    }, 1000);
-                }
-            }
-        }
-        
-        // Initialize everything
-        function init() {
-            initSmoothScroll();
-            
-            // Add global keyboard listener
-            document.addEventListener('keydown', handleGlobalKeyPress);
-            
-            // Always initialize particle field immediately
-            initParticleField();
-            
-            // Set initial active state for About Me button
-            const aboutButton = document.querySelector('.toggle-buttons button[onclick*="about"]');
-            if (aboutButton) {
-                aboutButton.classList.add('active');
-            }
-            
-            // Check if coming directly to #about
-            const isDirectToAbout = window.location.hash === '#about';
-            
-            if (isDirectToAbout) {
-                // Immediately scroll to top before anything else
-                window.scrollTo(0, 0);
-                // Skip intro entirely and animations
-                completeIntro(true);
-            }
-        }
-        
-        // Start when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-        
-        // Handle page visibility for performance
-        document.addEventListener('visibilitychange', () => {
-            if (particleField) {
-                if (document.hidden) {
-                    particleField.stop();
-                } else {
-                    particleField.animate();
-                }
-            }
-        });
-    </script>
-    
-    <!-- Screen reader announcements -->
-    <div id="announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      </span>
+    </footer>
+  </div>
+  <script src="scripts/particle-field.js?v=20260524-3" defer></script>
+  <script src="scripts/site.js?v=20260524-3" defer></script>
 </body>
 </html>

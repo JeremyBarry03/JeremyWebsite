@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Expo Go logo">
+  <g stroke-linejoin="round">
+    <path d="M51 28 80 12 111 93 69 104 47 56z" fill="#05071f" stroke="#f8f6ee" stroke-width="4.5"/>
+    <path d="M20 95 51 28 80 12 60 104 49 92 45 57 34 89z" fill="#f8f6ee" stroke="#05071f" stroke-width="4.5"/>
+    <path d="M45 57 20 95 49 92z" fill="#05071f"/>
+    <circle cx="98" cy="47" r="16.5" fill="#f8f6ee" stroke="#05071f" stroke-width="4.5"/>
+  </g>
+</svg>
