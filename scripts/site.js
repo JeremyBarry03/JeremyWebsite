@@ -88,8 +88,7 @@ const observer = new IntersectionObserver((entries) => {
   }
 }, { threshold: 0.16 });
 
-document.querySelectorAll(".reveal").forEach((node, index) => {
-  node.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+document.querySelectorAll(".reveal").forEach((node) => {
   observer.observe(node);
 });
 

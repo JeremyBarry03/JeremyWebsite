@@ -745,17 +745,15 @@
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+  opacity: 0.92;
+  transform: none;
+  transition: opacity 520ms ease-out;
 }
 
 .hero__copy.reveal {
   opacity: 1;
-  transform: none;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
 }
