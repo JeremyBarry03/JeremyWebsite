@@ -72,6 +72,11 @@
     height: 24px;
   }
 
+  .theme-toggle__icon {
+    width: 24px;
+    height: 24px;
+  }
+
   html[data-theme="light"] .theme-toggle__thumb {
     transform: translateX(28px);
   }
@@ -97,7 +102,7 @@
   }
 
   .hero__copy::before {
-    inset: -28px -18px -34px -18px;
+    inset: -28px -18px -20px -18px;
     background: var(--hero-mobile-scrim);
   }
 

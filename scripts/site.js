@@ -37,8 +37,11 @@ function applyTheme(theme, options = {}) {
 
 applyTheme(root.dataset.theme, { notify: false });
 
-themeToggle?.addEventListener("click", () => {
+themeToggle?.addEventListener("click", (event) => {
   applyTheme(root.dataset.theme === "light" ? "dark" : "light", { persist: true });
+  if (event.detail > 0) {
+    themeToggle.blur();
+  }
 });
 
 window.particleConcept = new window.ParticleConcept(document.getElementById("particleCanvas"));
