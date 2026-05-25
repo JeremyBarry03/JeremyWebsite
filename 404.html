@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeremy Barry</title>
+  <script>
+    (() => {
+      const routes = new Set(["/about", "/skills", "/work"]);
+      const path = window.location.pathname.replace(/\/$/, "") || "/";
+
+      if (routes.has(path)) {
+        try {
+          sessionStorage.setItem("jeremy-site-route-redirect", `${path}${window.location.search}${window.location.hash}`);
+        } catch {
+          // Continue to the homepage even if storage is unavailable.
+        }
+      }
+
+      window.location.replace("/");
+    })();
+  </script>
+</head>
+<body></body>
+</html>

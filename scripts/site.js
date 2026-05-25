@@ -1,6 +1,23 @@
 const root = document.documentElement;
 const themeToggle = document.getElementById("themeToggle");
 const THEME_STORAGE_KEY = "jeremy-site-theme";
+const ROUTE_REDIRECT_KEY = "jeremy-site-route-redirect";
+const SECTION_PATHS = {
+  about: "/about",
+  skills: "/skills",
+  work: "/work"
+};
+const PATH_SECTIONS = new Map(Object.entries(SECTION_PATHS).map(([section, path]) => [path, section]));
+
+try {
+  const redirectedPath = sessionStorage.getItem(ROUTE_REDIRECT_KEY);
+  if (redirectedPath) {
+    sessionStorage.removeItem(ROUTE_REDIRECT_KEY);
+    window.history.replaceState(null, "", redirectedPath);
+  }
+} catch {
+  // sessionStorage can be blocked in strict privacy modes.
+}
 
 function normalizedTheme(theme) {
   return theme === "light" ? "light" : "dark";
@@ -150,9 +167,63 @@ document.querySelectorAll(".project-card[data-project-href]").forEach((card) => 
   });
 });
 
-if (window.location.hash) {
-  window.requestAnimationFrame(() => {
-    const target = document.getElementById(window.location.hash.slice(1));
-    target?.scrollIntoView();
-  });
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
 }
+
+function sectionFromLocation() {
+  const hashSection = window.location.hash ? window.location.hash.slice(1) : "";
+  if (SECTION_PATHS[hashSection]) return hashSection;
+
+  const normalizedPath = window.location.pathname.replace(/\/$/, "") || "/";
+  return PATH_SECTIONS.get(normalizedPath) || null;
+}
+
+function sectionPath(sectionId) {
+  return SECTION_PATHS[sectionId] || "/";
+}
+
+function scrollToSection(sectionId, behavior = "smooth") {
+  const target = document.getElementById(sectionId);
+  if (!target) return;
+  target.scrollIntoView({ behavior, block: "start" });
+}
+
+function navigateToSection(sectionId, options = {}) {
+  const path = sectionPath(sectionId);
+  if (window.location.pathname !== path || window.location.hash) {
+    window.history.pushState({ sectionId }, "", path);
+  }
+  scrollToSection(sectionId, options.behavior);
+}
+
+document.querySelectorAll("[data-section-link]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const sectionId = link.dataset.sectionLink;
+    if (!sectionId) return;
+    event.preventDefault();
+    navigateToSection(sectionId);
+  });
+});
+
+window.addEventListener("popstate", () => {
+  const sectionId = sectionFromLocation();
+  if (sectionId) {
+    scrollToSection(sectionId);
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+window.requestAnimationFrame(() => {
+  const sectionId = sectionFromLocation();
+  if (sectionId) {
+    if (window.location.hash) {
+      window.history.replaceState({ sectionId }, "", sectionPath(sectionId));
+    }
+    scrollToSection(sectionId, "auto");
+    return;
+  }
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+});
