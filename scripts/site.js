@@ -1,3 +1,46 @@
+const root = document.documentElement;
+const themeToggle = document.getElementById("themeToggle");
+const THEME_STORAGE_KEY = "jeremy-site-theme";
+
+function normalizedTheme(theme) {
+  return theme === "light" ? "light" : "dark";
+}
+
+function storeTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    // localStorage can be blocked in strict privacy modes.
+  }
+}
+
+function applyTheme(theme, options = {}) {
+  const nextTheme = normalizedTheme(theme);
+  root.dataset.theme = nextTheme;
+  root.style.colorScheme = nextTheme;
+
+  if (themeToggle) {
+    const isLight = nextTheme === "light";
+    themeToggle.setAttribute("aria-checked", String(isLight));
+    themeToggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+    themeToggle.title = isLight ? "Switch to dark mode" : "Switch to light mode";
+  }
+
+  if (options.persist) {
+    storeTheme(nextTheme);
+  }
+
+  if (options.notify !== false) {
+    window.dispatchEvent(new CustomEvent("themechange", { detail: { theme: nextTheme } }));
+  }
+}
+
+applyTheme(root.dataset.theme, { notify: false });
+
+themeToggle?.addEventListener("click", () => {
+  applyTheme(root.dataset.theme === "light" ? "dark" : "light", { persist: true });
+});
+
 window.particleConcept = new window.ParticleConcept(document.getElementById("particleCanvas"));
 window.introParticles = new window.ParticleConcept(document.getElementById("introParticleCanvas"), {
   bindControls: false,

@@ -38,8 +38,8 @@
     height: 46px;
     max-width: calc(100% - 20px);
     margin-top: 12px;
-    padding: 0 8px;
-    gap: 8px;
+    padding: 0 7px;
+    gap: 7px;
   }
 
   .nav {
@@ -55,11 +55,25 @@
 
   .speed-control {
     min-height: 30px;
-    padding: 0 8px;
+    padding: 0 4px;
   }
 
   .speed-control input {
-    width: 76px;
+    width: 68px;
+  }
+
+  .theme-toggle {
+    width: 58px;
+    height: 30px;
+  }
+
+  .theme-toggle__thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  html[data-theme="light"] .theme-toggle__thumb {
+    transform: translateX(28px);
   }
 
   .tech-wall {
@@ -84,9 +98,7 @@
 
   .hero__copy::before {
     inset: -28px -18px -34px -18px;
-    background:
-      radial-gradient(ellipse at 36% 38%, rgb(0 0 0 / 0.92), rgb(0 0 0 / 0.72) 52%, rgb(0 0 0 / 0) 82%),
-      linear-gradient(90deg, rgb(0 0 0 / 0.76), rgb(0 0 0 / 0.34) 100%);
+    background: var(--hero-mobile-scrim);
   }
 
   .hero h1 {

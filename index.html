@@ -17,7 +17,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/main.css?v=20260524-24">
+  <script>
+    (() => {
+      try {
+        const savedTheme = localStorage.getItem("jeremy-site-theme");
+        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+      } catch {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles/main.css?v=20260524-25">
 </head>
 <body class="intro-active">
   <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
@@ -44,6 +54,20 @@
         <label class="speed-control" for="particleSpeed">
           <input id="particleSpeed" type="range" min="0" max="2" step="0.01" value="0.2" aria-label="Particle speed">
         </label>
+        <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Switch to light mode">
+          <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M20.2 14.8a7.1 7.1 0 0 1-8.9-8.9 7.7 7.7 0 1 0 8.9 8.9Z"></path>
+            </svg>
+          </span>
+          <span class="theme-toggle__thumb" aria-hidden="true"></span>
+          <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2.8v2.1M12 19.1v2.1M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M2.8 12h2.1M19.1 12h2.1M4.9 19.1l1.5-1.5M17.6 6.4l1.5-1.5"></path>
+            </svg>
+          </span>
+        </button>
       </div>
     </header>
 
@@ -361,7 +385,7 @@
       </span>
     </footer>
   </div>
-  <script src="scripts/particle-field.js?v=20260524-3" defer></script>
-  <script src="scripts/site.js?v=20260524-4" defer></script>
+  <script src="scripts/particle-field.js?v=20260524-4" defer></script>
+  <script src="scripts/site.js?v=20260524-5" defer></script>
 </body>
 </html>

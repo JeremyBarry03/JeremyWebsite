@@ -18,6 +18,7 @@ class ParticleConcept {
     this.speedFactor = 1;
     this.running = true;
     this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.refreshThemeColors();
     if (this.options.setDataset) {
       document.documentElement.dataset.particleShape = "polygon";
     }
@@ -50,7 +51,12 @@ class ParticleConcept {
       this.burst(event.clientX, event.clientY);
     };
 
+    this.handleThemeChange = () => {
+      this.refreshThemeColors();
+    };
+
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("themechange", this.handleThemeChange);
 
     if (this.options.interactive) {
       window.addEventListener("pointermove", this.handlePointerMove);
@@ -118,10 +124,35 @@ class ParticleConcept {
     }
   }
 
+  readRgbVariable(styles, name, fallback) {
+    const rawValue = styles.getPropertyValue(name).trim();
+    const values = rawValue.split(/\s+/).map((value) => Number(value));
+    return values.length === 3 && values.every((value) => Number.isFinite(value))
+      ? values
+      : fallback;
+  }
+
+  readNumberVariable(styles, name, fallback) {
+    const value = Number(styles.getPropertyValue(name).trim());
+    return Number.isFinite(value) ? value : fallback;
+  }
+
+  refreshThemeColors() {
+    const styles = getComputedStyle(document.documentElement);
+    this.particleColors = {
+      mint: this.readRgbVariable(styles, "--particle-mint-rgb", [155, 201, 191]),
+      blue: this.readRgbVariable(styles, "--particle-blue-rgb", [142, 168, 255]),
+      white: this.readRgbVariable(styles, "--particle-neutral-rgb", [244, 247, 251])
+    };
+    this.connectionColor = this.readRgbVariable(styles, "--particle-line-rgb", [142, 168, 255]);
+    this.particleAlphaScale = this.readNumberVariable(styles, "--particle-alpha-scale", 1);
+    this.connectionAlphaScale = this.readNumberVariable(styles, "--particle-line-alpha-scale", 1);
+  }
+
   colorFor(p, alpha) {
-    if (p.hue === "mint") return `rgba(155, 201, 191, ${alpha})`;
-    if (p.hue === "blue") return `rgba(142, 168, 255, ${alpha})`;
-    return `rgba(244, 247, 251, ${alpha})`;
+    const [red, green, blue] = this.particleColors[p.hue] || this.particleColors.white;
+    const finalAlpha = Math.min(1, Math.max(0, alpha * this.particleAlphaScale));
+    return `rgba(${red}, ${green}, ${blue}, ${finalAlpha})`;
   }
 
   update() {
@@ -168,10 +199,12 @@ class ParticleConcept {
         const b = this.particles[j];
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         if (dist < 92) {
+          const [red, green, blue] = this.connectionColor;
+          const alpha = (1 - dist / 92) * 0.16 * this.connectionAlphaScale;
           this.ctx.beginPath();
           this.ctx.moveTo(a.x, a.y);
           this.ctx.lineTo(b.x, b.y);
-          this.ctx.strokeStyle = `rgba(142, 168, 255, ${(1 - dist / 92) * 0.16})`;
+          this.ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
           this.ctx.lineWidth = 1;
           this.ctx.stroke();
         }
@@ -219,6 +252,7 @@ class ParticleConcept {
     window.cancelAnimationFrame(this.raf);
     window.clearTimeout(this.resizeTimer);
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("themechange", this.handleThemeChange);
     window.removeEventListener("pointermove", this.handlePointerMove);
     window.removeEventListener("pointerleave", this.handlePointerLeave);
     window.removeEventListener("pointerdown", this.handlePointerDown);
