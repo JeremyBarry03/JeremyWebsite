@@ -15,7 +15,7 @@ class ParticleConcept {
     this.pointer = { x: 0, y: 0, active: false };
     this.particles = [];
     this.frame = 0;
-    this.speedFactor = 1;
+    this.speedFactor = 0.4;
     this.running = true;
     this.reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.refreshThemeColors();

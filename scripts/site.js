@@ -77,7 +77,7 @@ let introComplete = false;
 
 const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
 
-async function typeIntroText(text, speed = 8) {
+async function typeIntroText(text, speed = 45) {
   introType.textContent = "";
   for (let index = 0; index < text.length; index += 1) {
     introType.textContent = `${text.slice(0, index + 1)}|`;
@@ -86,7 +86,7 @@ async function typeIntroText(text, speed = 8) {
   introType.textContent = text;
 }
 
-async function eraseIntroText(speed = 5) {
+async function eraseIntroText(speed = 25) {
   let current = introType.textContent;
   while (current.length > 0) {
     current = current.slice(0, -1);
