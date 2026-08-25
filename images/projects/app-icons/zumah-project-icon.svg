@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Zumah</title>
+  <desc id="desc">The Zumah logo mark on a light background.</desc>
+  <defs>
+    <linearGradient id="background" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#edf1f6"/>
+    </linearGradient>
+    <linearGradient id="navy-slab" x1="112" y1="248" x2="400" y2="144" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#031327"/>
+      <stop offset="1" stop-color="#09284a"/>
+    </linearGradient>
+    <linearGradient id="red-slab" x1="136" y1="376" x2="424" y2="272" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d91434"/>
+      <stop offset="0.48" stop-color="#ef4056"/>
+      <stop offset="1" stop-color="#ffd1d8"/>
+    </linearGradient>
+    <filter id="shadow" x="48" y="88" width="416" height="336" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="15" stdDeviation="15" flood-color="#031327" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#background)"/>
+  <g filter="url(#shadow)">
+    <path d="M172 128H428L356 248H100L172 128Z" fill="url(#navy-slab)"/>
+    <path d="M196 264H452L380 384H124L196 264Z" fill="url(#red-slab)"/>
+  </g>
+</svg>

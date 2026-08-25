@@ -699,7 +699,7 @@ html[data-theme="light"] .tech-logo[src*="capcut.svg?color=%23f4f7fb"] {
 }
 
 .project-tags {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 8px;
   margin: 18px 0 0;
