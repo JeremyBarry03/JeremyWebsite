@@ -448,8 +448,8 @@ html[data-theme="light"] .theme-toggle__icon--sun {
 html[data-theme="light"] .tech-logo[src*="github/f4f7fb"],
 html[data-theme="light"] .tech-logo[src*="railway/FFFFFF"],
 html[data-theme="light"] .tech-logo[src*="vercel/FFFFFF"],
-html[data-theme="light"] .tech-logo[src*="openai.svg?color=%23f4f7fb"],
-html[data-theme="light"] .tech-logo[src*="capcut.svg?color=%23f4f7fb"] {
+html[data-theme="light"] .tech-logo[src*="images/toolkit/codex.svg"],
+html[data-theme="light"] .tech-logo[src*="images/toolkit/capcut.svg"] {
   filter: invert(1) drop-shadow(0 12px 18px rgb(72 56 32 / 0.16));
 }
 
